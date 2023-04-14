@@ -4,31 +4,23 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12 my-2 card">
-            <div class="card-body">
-                <h5 class="h5">Codeigniter 4 Sudah Rilis!</h5>
-                <h6><?= $signature_random ?></h6>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis commodi tenetur quos ducimus repellat nulla, nam magni. Commodi iusto ad harum voluptas exercitationem facere eos earum laboriosam excepturi quas?</p>
+        <form action="<?= base_url('auth/login') ?>" method="post" autocomplete="off">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email">
+                <?php if (session()->getFlashdata('error')) : ?>
+                    <span class="text-danger"><?= session()->getFlashdata('error')['email'] ?></span>
+                <?php endif; ?>
             </div>
-        </div>
-        <div class="col-md-12 my-2 card">
-            <div class="card-body">
-                <h5 class="h5">Pengembangan Codeiginter 4 Tertunda</h5>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis commodi tenetur quos ducimus repellat nulla, nam magni. Commodi iusto ad harum voluptas exercitationem facere eos earum laboriosam excepturi quas?</p>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password">
+                <?php if (session()->getFlashdata('error')) : ?>
+                    <span class="text-danger"><?= session()->getFlashdata('error')['password'] ?></span>
+                <?php endif; ?>
             </div>
-        </div>
-        <div class="col-md-12 my-2 card">
-            <div class="card-body">
-                <h5 class="h5">Wow, Ini 5 Startup yang Menggunakan Codeigniter</h5>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis commodi tenetur quos ducimus repellat nulla, nam magni. Commodi iusto ad harum voluptas exercitationem facere eos earum laboriosam excepturi quas?</p>
-            </div>
-        </div>
-        <div class="col-md-12 my-2 card">
-            <div class="card-body">
-                <h5 class="h5">Codeigniter Ternyata Framework Terpopuler di Inodnesia</h5>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis commodi tenetur quos ducimus repellat nulla, nam magni. Commodi iusto ad harum voluptas exercitationem facere eos earum laboriosam excepturi quas?</p>
-            </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
     </div>
 </div>
 

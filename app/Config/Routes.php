@@ -31,6 +31,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/auth', 'Auth::index');
+$routes->post('/auth/login', 'Auth::login');
 $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'authGuard']);
 $routes->get('/signature', 'Signature::index');
 $routes->get('/verify/(:any)', 'Signature::verify/$1');

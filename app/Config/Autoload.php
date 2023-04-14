@@ -95,5 +95,8 @@ class Autoload extends AutoloadConfig
      */
     public $helpers = [
         'text',
+        'url',
+        'form',
+        'array',
     ];
 }
