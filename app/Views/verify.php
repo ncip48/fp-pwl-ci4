@@ -28,8 +28,8 @@
 <body class="vh-100 d-flex flex-column justify-content-between">
     <div class="container">
         <?php if ($valid) { ?>
-            <h3 class="pt-3">Signature Valid <i class="bi bi-check-circle-fill text-warning"></i></h3>
-            <h3 class="pb-3">Dokumen ini telah ditandatangani secara digital oleh: <?= $name ?></h3>
+            <h3 class="pt-4">Signature <b>Valid</b> <i class="bi bi-check-circle-fill text-warning"></i></h3>
+            <h3 class="pb-3">Dokumen ini telah ditandatangani secara <i><u>digital</u></i> oleh: <?= $name ?></h3>
             <hr />
             <div class="d-flex">
                 <img src="<?= $qr ?>" alt="" height="150" width="150">
@@ -50,17 +50,19 @@
                 </div>
             </div>
         <?php } else { ?>
-            <h3 class="pt-3">Signature Invalid <i class="bi bi-x-circle-fill text-danger"></i></h3>
-            <h3 class="pb-3">Dokumen ini tidak dapat diverifikasi</h3>
+            <h3 class="pt-4">Signature <b>Invalid</b> <i class="bi bi-x-circle-fill text-danger"></i></h3>
+            <h3 class="pb-3">Dokumen ini <i><u>tidak dapat</u></i> diverifikasi</h3>
             <hr />
         <?php } ?>
     </div>
 
-    <footer class="">
-        <div class="px-3 py-2 border-dash">
-            <small><i>Halaman ini merupakan halaman verifikasi tanda tangan digital yang secara sah dan telah diverifikasi oleh sistem. </i></small>
-        </div>
-    </footer>
+    <?php if ($valid) { ?>
+        <footer class="">
+            <div class="px-3 py-2 border-dash">
+                <small><i>Halaman ini merupakan halaman verifikasi tanda tangan digital yang secara sah dan telah diverifikasi oleh sistem. </i></small>
+            </div>
+        </footer>
+    <?php } ?>
 </body>
 
 </html>
