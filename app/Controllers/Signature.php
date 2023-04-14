@@ -64,10 +64,10 @@ class Signature extends BaseController
         return view('signature', $data);
     }
 
-    public function verify($has)
+    public function verify($hash)
     {
         $sign = new ModelsSignature();
-        $sign = $sign->where('hash', $has);
+        $sign = $sign->where('hash', $hash);
         $details = new SignatureDetail();
         // $details = $details->where('signature_id', $sign['id'])->findAll();
         //join sign with details
@@ -90,8 +90,6 @@ class Signature extends BaseController
         }
 
         $valid = $details ? true : false;
-
-
 
         foreach ($details as $key => $detail) {
             $user = array_filter($users, function ($user) use ($detail) {
