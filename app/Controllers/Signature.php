@@ -40,6 +40,12 @@ class Signature extends BaseController
         return $dataUri;
     }
 
+    public static function generateSignature()
+    {
+        $signature_random = random_string('alnum', 70);
+        return $signature_random;
+    }
+
     public function index()
     {
         //find one signature with ci4 model
@@ -65,18 +71,33 @@ class Signature extends BaseController
         $details = new SignatureDetail();
         // $details = $details->where('signature_id', $sign['id'])->findAll();
         //join sign with details
-        $details = $sign->join('signature_details', 'signature_details.signature_id = signatures.id', 'left')->where('signatures.hash', $has)->findAll();
-        $sign = $sign->first();
-
-        $valid = $details ? true : false;
+        $details = $sign->join('signature_details', 'signature_details.signature_id = signatures.id', 'left')->findAll();
 
         $name = [];
         $user_id = [];
-        foreach ($details as $detail) {
-            $user = new User();
-            $user = $user->where('id', $detail['user_id'])->first();
-            $name[] = $user['name'];
-            $user_id[] = $user['id'];
+
+        if ($details) {
+            $sign = $details[0];
+            //get the all user_id in details and append to $user_id
+            foreach ($details as $detail) {
+                $user_id[] = $detail['user_id'];
+            }
+            $users = new User();
+            $users = $users->whereIn('id', array_unique($user_id))->findAll();
+        } else {
+            $sign = null;
+            $users = null;
+        }
+
+        $valid = $details ? true : false;
+
+
+
+        foreach ($details as $key => $detail) {
+            $user = array_filter($users, function ($user) use ($detail) {
+                return $user['id'] == $detail['user_id'];
+            });
+            $name[] = $user ? $user[$key]['name'] : null;
         }
 
         //append $name to $details with variable 'user'
@@ -92,7 +113,7 @@ class Signature extends BaseController
             'signature' => $sign,
             'name' => $name,
             'details' => $details,
-            'qr' => $this->generateQR($sign['hash']),
+            'qr' => $sign ? $this->generateQR($sign['hash']) : null,
         ];
 
         return view('verify', $data);
