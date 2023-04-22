@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ini Judul | <?= $title ?></title>
+    <title><?= env('app.name') ?> | <?= $title ?></title>
 
     <!-- Bootstrap CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,15 +18,6 @@
 <body>
 
     <?= $this->include('layout/navbar') ?>
-    <header class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="h1">Portal Berita Codeigniter</h1>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <?= $this->renderSection('content') ?>
 
@@ -35,6 +26,8 @@
     <!-- Jquery dan Bootsrap JS -->
     <script src="<?= base_url('js/jquery-3.6.4.min.js') ?>"></script>
     <script src="<?= base_url('js/bootstrap.min.js') ?>"></script>
+
+    <?= $this->renderSection('customScripts') ?>
 
 </body>
 

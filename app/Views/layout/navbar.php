@@ -18,18 +18,38 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('bantuan') ?>">Bantuan?</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('notifikasi') ?>">Notifikasi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('kegiatanku') ?>">Kegiatanku</a>
-                </li>
+                <?php if (session('logged_in')) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('notifikasi') ?>">Notifikasi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('kegiatanku') ?>">Kegiatanku</a>
+                    </li>
+                <?php endif; ?>
             </ul>
+            <?php if (!session('logged_in')) : ?>
+                <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center" type="submit" href="<?= base_url('auth') ?>">
+                    <i class="bi bi-person-fill text-gray me-2" style="font-size:1.2rem"></i>
+                    Masuk ke Akun
+                </a>
+            <?php else : ?>
+                <div class="dropdown dropdown-user">
+                    <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- <i class="bi bi-person-fill text-gray me-2" style="font-size:1.2rem"></i> -->
+                        <img src="<?= base_url('images/63307728.png') ?>" alt="" class="rounded-circle me-2" width="30" height="30">
+                        <?php if (strpos(session('user')['name'], ' ') !== false) : ?>
+                            <?= explode(' ', session('user')['name'])[0] ?>
+                        <?php else : ?>
+                            <?= session('user')['name'] ?>
+                        <?php endif; ?>
+                    </a>
 
-            <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center" type="submit" href="<?= base_url('auth') ?>">
-                <i class="bi bi-person-fill text-gray me-2" style="font-size:1.2rem"></i>
-                Masuk ke Akun
-            </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profil</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('logout') ?>">Keluar</a></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </nav>

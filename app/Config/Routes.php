@@ -30,12 +30,18 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('/auth', 'Auth::index');
+$routes->get('/auth', 'Auth::index', ['filter' => 'loginGuard']);
 $routes->post('/auth/login', 'Auth::login');
-$routes->get('/dashboard', 'Dashboard::index', ['filter' => 'authGuard']);
+$routes->get('/mahasiswa', 'Dashboard::index', ['filter' => 'authGuard']);
+$routes->get('/mahasiswa/dashboard', 'Dashboard::index', ['filter' => 'authGuard']);
 $routes->get('/signature', 'Signature::index');
 $routes->get('/verify/(:any)', 'Signature::verify/$1');
 $routes->get('/pdf', 'Pdf::index');
+$routes->get('/logout', 'Auth::logout');
+
+
+//routes API
+$routes->post('/api/login', 'Api\Auth::login');
 
 /*
  * --------------------------------------------------------------------

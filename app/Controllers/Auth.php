@@ -7,6 +7,7 @@ use App\Models\User;
 
 class Auth extends BaseController
 {
+
     public function index()
     {
         $signature_random = Signature::generateSignature();
@@ -40,8 +41,7 @@ class Auth extends BaseController
                 ],
             ];
             if (!$this->validate($rules)) {
-                $session->setFlashdata('error', $validation->getErrors());
-                return redirect()->to(base_url('auth'));
+                return $this->getResponse("Error validasi", null, 403, $validation->getErrors());
             }
             $user = new User();
             $user = $user->where('email', $this->request->getPost('email'))->first();
@@ -65,13 +65,24 @@ class Auth extends BaseController
                         return redirect()->to(base_url('dekan'));
                     }
                 } else {
-                    $session->setFlashdata('error', 'Password not match');
-                    return redirect()->to(base_url('auth'));
+                    $error = array(
+                        'password' => 'Password salah',
+                    );
+                    return $this->getResponse("Password salah", null, 401, $error);
                 }
             } else {
-                $session->setFlashdata('error', 'Email not found');
-                return redirect()->to(base_url('auth'));
+                $error = array(
+                    'email' => 'Akun tidak ditemukan',
+                );
+                return $this->getResponse("Akun tidak ditemukan", null, 404, $error);
             }
         }
+    }
+
+    public function logout()
+    {
+        $session = \Config\Services::session();
+        $session->destroy();
+        return redirect()->to(base_url('auth'));
     }
 }

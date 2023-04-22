@@ -55,4 +55,21 @@ abstract class BaseController extends Controller
 
         // E.g.: $this->session = \Config\Services::session();
     }
+
+    /**
+     * An custom response for api
+     * @var msg
+     * @var data
+     * @var code
+     * @var error
+     */
+    public function getResponse($msg, $data = [], $code = 200, $error = null)
+    {
+        $arr = [
+            'msg' => $msg,
+            'error' => $error,
+            'data' => $data
+        ];
+        return $this->response->setStatusCode($code)->setJSON($arr);
+    }
 }
