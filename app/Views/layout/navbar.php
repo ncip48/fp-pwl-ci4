@@ -24,17 +24,27 @@
                         <a class="nav-link" href="<?= base_url('kegiatanku') ?>">Kegiatanku</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('notifikasi') ?>"><i class="bi bi-bell-fill"></i></a>
+                        <a class="nav-link d-none d-lg-block" href="<?= base_url('notifikasi') ?>"><i class="bi bi-bell-fill"></i></a>
+                        <a class="nav-link d-block d-lg-none" href="<?= base_url('notifikasi') ?>">Notifikasi</i></a>
+                    </li>
+                    <div class="d-block d-lg-none">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('logout') ?>">Logout</a>
+                        </li>
+                    </div>
+                <?php else : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('auth') ?>">Masuk</a>
                     </li>
                 <?php endif; ?>
             </ul>
             <?php if (!session('logged_in')) : ?>
-                <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center" type="submit" href="<?= base_url('auth') ?>">
+                <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center d-none d-lg-flex" type="submit" href="<?= base_url('auth') ?>">
                     <i class="bi bi-person-fill text-gray me-2" style="font-size:1.2rem"></i>
                     Masuk ke Akun
                 </a>
             <?php else : ?>
-                <div class="dropdown dropdown-user">
+                <div class="dropdown dropdown-user d-none d-lg-block">
                     <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- <i class="bi bi-person-fill text-gray me-2" style="font-size:1.2rem"></i> -->
                         <img src="<?= base_url('images/63307728.png') ?>" alt="" class="rounded-circle me-2" width="30" height="30">
