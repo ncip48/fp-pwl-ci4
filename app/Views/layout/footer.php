@@ -1,10 +1,10 @@
 <footer class="jumbotron jumbotron-fluid mt-5 mb-0 p-5 bg-dark text-light">
     <div class="container">
-        <div class="row gx-5">
+        <div class="row g-5">
             <div class="col-md-4 col-12">
-                <div class="d-flex align-items-start">
+                <div class="d-lg-flex align-items-start">
                     <img src="<?= base_url('images/logo-mini.png') ?>" alt="logo" width="80" height="80">
-                    <div class="ms-4">
+                    <div class="ms-lg-4 mt-3 mt-lg-0">
                         <h6 class="fw-bold mb-1">Universitas Amikom</h6>
                         <h5 class="fw-bold mb-3">Yogyakarta</h5>
                         <small><i class="bi bi-envelope-fill me-2"></i> amikom@amikom.ac.id</small>
