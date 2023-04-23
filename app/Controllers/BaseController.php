@@ -72,4 +72,21 @@ abstract class BaseController extends Controller
         ];
         return $this->response->setStatusCode($code)->setJSON($arr);
     }
+
+    /**
+     * Mendapatkan status beasiswa
+     * @var status
+     */
+    public function getStatusBeasiswa($status)
+    {
+        if ($status == 0) {
+            return "Menunggu Persetujuan Kaprodi";
+        } else if ($status == 1) {
+            return "Menunggu Persetujuan Dekan";
+        } else if ($status == 2) {
+            return "Diterima";
+        } else if ($status == 3) {
+            return "Ditolak";
+        }
+    }
 }

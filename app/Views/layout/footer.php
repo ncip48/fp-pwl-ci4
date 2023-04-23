@@ -1,4 +1,4 @@
-<footer class="jumbotron jumbotron-fluid mt-5 mb-0 p-5 bg-dark text-light">
+<footer class="jumbotron jumbotron-fluid mt-5 mb-0 p-lg-5 bg-dark text-light">
     <div class="container">
         <div class="row g-5">
             <div class="col-md-4 col-12">
