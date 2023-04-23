@@ -43,7 +43,7 @@
                             </li>
                         </div>
                     <?php else : ?>
-                        <li class="nav-item">
+                        <li class="nav-item d-block d-lg-none">
                             <a class="nav-link" href="<?= base_url('auth') ?>">Masuk</a>
                         </li>
                     <?php endif; ?>

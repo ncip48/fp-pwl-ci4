@@ -21,7 +21,7 @@
     <div class="d-flex align-items center justify-content-between">
         <div class="d-flex align-items-center mb-2">
             <h3 class="fw-bold me-2 mb-0">Program Tersedia</h3>
-            <i class="bi bi-question-circle fs-5 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="right" title="Program yang tersedia di portal ini"></i>
+            <i class="bi bi-question-circle fs-6 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="right" title="Program yang tersedia di portal ini"></i>
         </div>
         <i class="bi bi-arrow-clockwise fs-4 cursor-pointer" id="refresh-category"></i>
     </div>
