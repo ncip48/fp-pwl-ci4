@@ -18,8 +18,8 @@
                 <span class="text-start">Copyright &copy <?= Date('Y') ?> Kiyowo Group - PWL</span>
             </div>
             <div class="col-md-4 col-12">
-                <h6 class="text-decoration-underline fw-bold text-end">Social Media</h6>
-                <div class="d-flex gap-3 float-end">
+                <h6 class="text-decoration-underline fw-bold text-lg-end">Social Media</h6>
+                <div class="d-flex gap-3 float-lg-end">
                     <a href="https://www.facebook.com/amikomjogja" target="_blank">
                         <i class="bi bi-facebook fs-4 text-white"></i>
                     </a>

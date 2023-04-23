@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-sm-3 pb-md-0 py-lg-3">
     <div class="container">
         <a class="navbar-brand" href="<?= base_url('/') ?>">
             <img src="<?= base_url('images/logo.png') ?>" height="50" width="150" alt="">
@@ -9,7 +9,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2 me-3">
+            <ul class="navbar-nav ms-auto mb-lg-0 mb-lg-0 gap-2 me-lg-3">
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('/') ?>">Beranda</a>
                 </li>
@@ -25,18 +25,28 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link d-none d-lg-block" href="<?= base_url('notifikasi') ?>"><i class="bi bi-bell-fill"></i></a>
-                        <a class="nav-link d-block d-lg-none" href="<?= base_url('notifikasi') ?>">Notifikasi</i></a>
+                        <!-- <a class="nav-link d-block d-lg-none" href="<?= base_url('notifikasi') ?>">Notifikasi</i></a> -->
                     </li>
                     <div class="d-block d-lg-none">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-4 text-center border-end">
+                                    <a class="nav-link" href="<?= base_url('notifikasi') ?>"><i class="bi bi-bell-fill fs-4"></i></a>
+                                </div>
+                                <div class="col-4 text-center border-end">
+                                    <a class="nav-link" href="<?= base_url('profile') ?>"><i class="bi bi-person-fill fs-4"></i></a>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <a class="nav-link" href="<?= base_url('logout') ?>"><i class="bi bi-box-arrow-right fs-4"></i></a>
+                                </div>
+                            </div>
+                            </li>
+                        </div>
+                    <?php else : ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('logout') ?>">Logout</a>
+                            <a class="nav-link" href="<?= base_url('auth') ?>">Masuk</a>
                         </li>
-                    </div>
-                <?php else : ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('auth') ?>">Masuk</a>
-                    </li>
-                <?php endif; ?>
+                    <?php endif; ?>
             </ul>
             <?php if (!session('logged_in')) : ?>
                 <a class="btn btn-light rounded-pill fw-bold py-2 d-flex align-items-center d-none d-lg-flex" type="submit" href="<?= base_url('auth') ?>">
