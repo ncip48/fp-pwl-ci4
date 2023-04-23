@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-ungu py-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="<?= base_url('/') ?>">
             <img src="<?= base_url('images/logo.png') ?>" height="50" width="150" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

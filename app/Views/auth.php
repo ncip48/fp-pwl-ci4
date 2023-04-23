@@ -57,6 +57,7 @@
                 <h4 class="mb-2">Welcome to Sneat! 👋</h4>
                 <p class="mb-4">Silahkan login menggunakan akun yang sudah terdaftar</p>
                 <form form id="login-form" autocomplete="off" class="mb-3">
+                    <input type="hidden" value="<?= previous_url() ?>" id="previous_url" />
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan Email">
@@ -102,7 +103,8 @@
             $('#txt-btn').text('Loading...')
             var formData = {
                 email: $("#email").val(),
-                password: $("#password").val()
+                password: $("#password").val(),
+                previous_url: $("#previous_url").val()
             }
             $.ajax({
                 type: "POST",
@@ -112,6 +114,7 @@
                 encode: true,
             }).done(function(data) {
                 const result = data.data
+                console.log(data)
                 window.location.href = result.redirect
                 $('#email').removeClass('is-invalid')
                 $('#password').removeClass('is-invalid')

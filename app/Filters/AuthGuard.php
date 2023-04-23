@@ -26,6 +26,9 @@ class AuthGuard implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if (!session()->get('logged_in')) {
+            $previous_url = current_url();
+            $session = \Config\Services::session();
+            $session->set('previous_url', $previous_url);
             return redirect()->to('/auth');
         }
     }

@@ -1,18 +1,23 @@
 :root {
   --bs-body-color: #697a8d;
+  --ungu: #581c87;
 }
 
 * {
   font-family: "Schibsted Grotesk", sans-serif;
 }
 
+body {
+  background-color: #eff0f0;
+}
+
 .bg-ungu {
-  background-color: #581c87;
+  background-color: var(--ungu);
   color: white;
 }
 
 .text-ungu {
-  color: #581c87;
+  color: var(--ungu);
 }
 
 .text-gray {
@@ -128,7 +133,9 @@ nav .nav-link {
 }
 
 .dropdown-user .btn:focus,
-.dropdown-user .btn:active {
+.dropdown-user .btn:active,
+.home .card-body .btn:focus,
+.home .card-body .btn:active {
   outline: none !important;
   box-shadow: none;
 }
@@ -156,4 +163,67 @@ nav .nav-link {
 
 .app-brand a {
   text-decoration: none;
+}
+
+.home .card {
+  border-width: 0px;
+  border-radius: 16px;
+}
+
+.home .card .card-body {
+  padding: 16px 16px 28px 16px;
+}
+
+.home .card .card-header {
+  padding: 0px;
+}
+
+.home .card .card-header img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px 16px 0px 0px;
+}
+
+.home .card .card-body .btn {
+  border-radius: 16px;
+}
+
+.text-justify {
+  margin: 0;
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+  /* color: var(--bs-dark-color); */
+  /* color: var(--ungu); */
+}
+
+a:hover {
+  text-decoration: none;
+  /* color: var(--bs-dark-color); */
+  /* color: #3d135e; */
+  color: var(--ungu);
+  transition: 0.3s;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.bg-toga {
+  background-image: url("../images/toga.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* height: 400px; */
+}
+
+.bg-toga .glass {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.2px);
+  -webkit-backdrop-filter: blur(10.2px);
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
 }

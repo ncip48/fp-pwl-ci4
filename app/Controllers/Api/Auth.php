@@ -47,20 +47,18 @@ class Auth extends BaseController
                         ];
                         $session->set('user', $session_user);
                         $session->set('logged_in', TRUE);
-                        //cek role
-                        if ($user['role'] == 1) {
-                            $data = [
-                                'redirect' => 'mahasiswa',
-                                'user' => $user,
-                            ];
-                            return $this->getResponse("Berhasil login", $data, 200, null);
+                        $previous_season_url = $session->get('previous_url');
+                        if ($previous_season_url == null) {
+                            $url = $this->request->getPost('previous_url');
                         } else {
-                            $data = [
-                                'redirect' => 'pengelola',
-                                'user' => $user,
-                            ];
-                            return $this->getResponse("Berhasil login", $data, 200, null);
+                            $url = $previous_season_url;
                         }
+                        $data = [
+                            'redirect' => $url,
+                            'user' => $user,
+                        ];
+                        $session->remove('previous_url');
+                        return $this->getResponse("Berhasil login", $data, 200, null);
                     } else {
                         $error = array(
                             'password' => 'Password salah',
