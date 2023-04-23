@@ -19,7 +19,10 @@
 </header>
 <div class="container home mt-4">
     <div class="d-flex align-items center justify-content-between">
-        <h3 class="fw-bold">Program Tersedia</h3>
+        <div class="d-flex align-items-center mb-2">
+            <h3 class="fw-bold me-2 mb-0">Program Tersedia</h3>
+            <i class="bi bi-question-circle fs-5 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="right" title="Program yang tersedia di portal ini"></i>
+        </div>
         <i class="bi bi-arrow-clockwise fs-4 cursor-pointer" id="refresh-category"></i>
     </div>
     <div class="d-flex justify-content-center spinner-category py-5">
@@ -65,11 +68,11 @@
                         <div class="card-body">
                             <h5 class="h5 fw-bolder">${item.name}</h5>
                             <p class="mb-4 text-justify">${item.description}</p>
-                            <a href=""><p class="fw-bold fs-6">Lihat Syarat & Ketentuan <i class="bi bi-arrow-right"></i></p></a>
+                            <a href="<?= base_url('sk/') ?>${item.slug}"><p class="fw-bold fs-6">Lihat Syarat & Ketentuan <i class="bi bi-arrow-right"></i></p></a>
                             <hr />
-                            <a href=""><p class="fw-bold fs-6">Lihat Jadwal Pendaftaran <i class="bi bi-arrow-right"></i></p></a>
+                            <a href="<?= base_url('jadwal/') ?>${item.slug}"><p class="fw-bold fs-6">Lihat Jadwal Pendaftaran <i class="bi bi-arrow-right"></i></p></a>
                             <hr />
-                            <a href=""><p class="fw-bold mb-4  fs-6">Lihat Benefit <i class="bi bi-arrow-right"></i></p></a>
+                            <a href="<?= base_url('benefit/') ?>${item.slug}"><p class="fw-bold mb-4  fs-6">Lihat Benefit <i class="bi bi-arrow-right"></i></p></a>
                             <div class="d-grid gap-2">
                                 <a type="button" class="btn btn-outline-dark fw-bold" href="<?= base_url('program/') ?>${item.slug}">Telusuri
                                     <i class="bi bi-search ms-2"></i>

@@ -3,7 +3,8 @@
         <a class="navbar-brand" href="<?= base_url('/') ?>">
             <img src="<?= base_url('images/logo.png') ?>" height="50" width="150" alt="">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -20,10 +21,10 @@
                 </li>
                 <?php if (session('logged_in')) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('notifikasi') ?>">Notifikasi</a>
+                        <a class="nav-link" href="<?= base_url('kegiatanku') ?>">Kegiatanku</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('kegiatanku') ?>">Kegiatanku</a>
+                        <a class="nav-link" href="<?= base_url('notifikasi') ?>"><i class="bi bi-bell-fill"></i></a>
                     </li>
                 <?php endif; ?>
             </ul>

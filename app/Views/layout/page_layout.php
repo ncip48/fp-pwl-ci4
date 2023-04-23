@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/bootstrap.min.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('css/jquery-ui.min.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('css/custom.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('css/bootstrap-icons.css') ?>" />
 </head>
@@ -25,8 +26,23 @@
 
     <!-- Jquery dan Bootsrap JS -->
     <script src="<?= base_url('js/jquery-3.6.4.min.js') ?>"></script>
+    <script src="<?= base_url('js/popper.min.js') ?>"></script>
+    <script src="<?= base_url('js/jquery-ui.min.js') ?>"></script>
     <script src="<?= base_url('js/bootstrap.min.js') ?>"></script>
 
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+
+    <script>
+        $(document).ready(function() {
+            $("body").tooltip({
+                selector: '[data-bs-toggle=tooltip]'
+            });
+        });
+    </script>
     <?= $this->renderSection('customScripts') ?>
 
 </body>
