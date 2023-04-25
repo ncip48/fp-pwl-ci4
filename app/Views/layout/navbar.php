@@ -66,7 +66,7 @@
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="<?= base_url('profile') ?>">Profil</a></li>
+                        <li><a class="dropdown-item" href="<?= base_url('akun') ?>">Akun Saya</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('logout') ?>">Keluar</a></li>
                     </ul>
                 </div>

@@ -1,5 +1,5 @@
-<footer class="jumbotron jumbotron-fluid mt-5 mb-0 p-lg-5 bg-dark text-light">
-    <div class="container">
+<footer class="jumbotron jumbotron-fluid mt-5 mb-0 pt-lg-5 pb-lg-3 bg-dark text-light">
+    <div class="container pb-5">
         <div class="row g-5">
             <div class="col-md-4 col-12">
                 <div class="d-lg-flex align-items-start">
@@ -13,12 +13,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-12 d-flex justify-content-between flex-column">
-                <h6 class="text-decoration-underline fw-bold">Sitemap</h6>
-                <span class="text-start">Copyright &copy <?= Date('Y') ?> Kiyowo Group - PWL</span>
+            <div class="col-md-4 col-12 d-flex flex-column">
+                <h6 class="text-decoration-underline fw-bold mb-3">Sitemap</h6>
+                <ul class="list-unstyled">
+                    <li><a href="<?= base_url('tentang') ?>" class="text-decoration-none text-white">Tentang Kami</a></li>
+                    <li><a href="<?= base_url('hubungi') ?>" class="text-decoration-none text-white">Hubungi Kami</a></li>
+                    <?php if (session()->get('isLoggedIn')) { ?>
+                        <li><a href="<?= base_url('auth') ?>" class="text-decoration-none text-white">Login</a></li>
+                    <?php } else { ?>
+                        <li><a href="<?= base_url('akun') ?>" class="text-decoration-none text-white">Akun Saya</a></li>
+                    <?php } ?>
+                </ul>
             </div>
             <div class="col-md-4 col-12">
-                <h6 class="text-decoration-underline fw-bold text-lg-end">Social Media</h6>
+                <h6 class="text-decoration-underline fw-bold text-lg-end mb-3">Social Media</h6>
                 <div class="d-flex gap-3 float-lg-end">
                     <a href="https://www.facebook.com/amikomjogja" target="_blank">
                         <i class="bi bi-facebook fs-4 text-white"></i>
@@ -36,4 +44,6 @@
             </div>
         </div>
     </div>
+    <hr />
+    <span class="d-flex justify-content-center">Copyright &copy <?= Date('Y') ?> Kiyowo Group - PWL</span>
 </footer>
