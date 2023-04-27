@@ -33,7 +33,9 @@ $routes->get('/', 'Home::index');
 $routes->get('/auth', 'Auth::index', ['filter' => 'loginGuard']);
 $routes->post('/auth/login', 'Auth::login');
 $routes->get('/mahasiswa', 'Dashboard::index', ['filter' => 'authGuard']);
-$routes->get('/program', 'Dashboard::index', ['filter' => 'authGuard']);
+$routes->get('/program', 'Program::index');
+$routes->get('/program/(:any)', 'Program::detail/$1');
+
 $routes->get('/mahasiswa/dashboard', 'Dashboard::index', ['filter' => 'authGuard']);
 $routes->get('/signature', 'Signature::index');
 $routes->get('/verify/(:any)', 'Signature::verify/$1');
@@ -45,6 +47,8 @@ $routes->get('/logout', 'Auth::logout');
 $routes->group('api', static function ($routes) {
     $routes->post('login', 'Api\Auth::login');
     $routes->get('categories', 'Api\Category::index');
+    $routes->post('programs', 'Api\Program::index');
+    $routes->get('program/(:any)', 'Api\Program::detail/$1');
 });
 
 /*

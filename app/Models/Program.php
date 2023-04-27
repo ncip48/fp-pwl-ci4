@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Signature extends Model
+class Program extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'signatures';
+    protected $table            = 'programs';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -15,8 +15,16 @@ class Signature extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'document_id',
-        'hash',
+        'category_id',
+        'name',
+        'organizer',
+        'slot',
+        'image',
+        'description',
+        'qualification',
+        'start_program',
+        'end_program',
+        'location'
     ];
 
     // Dates
@@ -27,19 +35,8 @@ class Signature extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [
-        'document_id' => 'required|integer',
-        'hash' => 'required',
-    ];
-    protected $validationMessages   = [
-        'document_id' => [
-            'required' => 'Dokumen harus dipilih',
-            'integer' => 'Dokumen harus angka',
-        ],
-        'hash' => [
-            'required' => 'Hash harus diisi',
-        ],
-    ];
+    protected $validationRules      = [];
+    protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
