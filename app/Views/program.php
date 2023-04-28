@@ -102,8 +102,10 @@
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
                     detail_program.append(`<div class="col-md-12 text-center py-5 h-100 d-flex justify-content-center align-items-center">
+                    <div class="d-flex flex-column align-items-center">
                     <h6 class="fw-bold">Terjadi Kesalahan</h6>
                     <p class="text-center">Silahkan refresh halaman ini</p>
+                    </div>
                 </div>`)
                 }
             })
@@ -171,7 +173,7 @@
                     $('.content-category').removeClass('d-none')
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
-                    $('.program').append(`<div class="col-md-12 text-center py-5">
+                    $('.list-program').append(`<div class="col-md-12 text-center py-5">
                     <h6 class="fw-bold">Terjadi Kesalahan</h6>
                     <p class="text-center">Silahkan refresh halaman ini</p>
                 </div>`)
