@@ -99,12 +99,12 @@
                 },
                 error: function(xhr, status, error) {
                     console.log(error)
-                    $('.detail-program').append(`<div class="col-md-12 text-center py-5">
+                    $('.spinner-detail').addClass('d-none')
+                    $('.content-detail').removeClass('d-none')
+                    detail_program.append(`<div class="col-md-12 text-center py-5 h-100 d-flex justify-content-center align-items-center">
                     <h6 class="fw-bold">Terjadi Kesalahan</h6>
                     <p class="text-center">Silahkan refresh halaman ini</p>
                 </div>`)
-                    $('.spinner-detail').addClass('d-none')
-                    $('.content-detail').removeClass('d-none')
                 }
             })
         }
