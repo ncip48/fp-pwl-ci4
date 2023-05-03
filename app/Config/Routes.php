@@ -42,6 +42,12 @@ $routes->get('/verify/(:any)', 'Signature::verify/$1');
 $routes->get('/pdf', 'Pdf::index');
 $routes->get('/logout', 'Auth::logout');
 
+//experimental
+$routes->get('api/pdf/convert/(:any)', 'Api\Pdf::convert/$1');
+$routes->get('api/pdf/convert', 'Api\Pdf::newConvert');
+$routes->get('api/savehtml/', 'Api\Pdf::saveHtmlToMysql');
+$routes->get('showhtml', 'Api\Pdf::showHtmlFromMysql');
+
 
 //routes API
 $routes->group('api', static function ($routes) {
@@ -49,6 +55,8 @@ $routes->group('api', static function ($routes) {
     $routes->get('categories', 'Api\Category::index');
     $routes->post('programs', 'Api\Program::index');
     $routes->get('program/(:any)', 'Api\Program::detail/$1');
+    $routes->post('pdf', 'Api\Pdf::upload');
+    $routes->post('generate-pdf', 'Api\Pdf::generatePdf');
 });
 
 /*
