@@ -16,6 +16,8 @@
                         <input id="query" name="query" type="text" class="form-control border-start-0 ps-0" placeholder="Cari program" aria-label="Cari program" aria-describedby="button-addon2" autocomplete="false">
                     </div>
                 </div>
+
+
                 <div class="col-12 col-lg-5">
                     <div class="input-group mb-0">
                         <!-- input with icon in left bootstrap 5 -->
@@ -28,6 +30,15 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="mt-3 filter-program d-none">
+        <span class="badge bg-warning text-dark px-3 py-2 w-100 fw-normal fs-6 text-start">
+            Mencari dengan kata kunci <span class="fw-bold" id="keyword">Semua Program</span>, Lokasi <span class="fw-bold" id="location-keyword">Semua Lokasi</span>
+            <span class="text-underlined cursor-pointer" id="reset-filter">
+                <i class="bi bi-x-circle-fill ms-2"></i>
+                Hapus Filter
+            </span>
+        </span>
     </div>
     <div class="row mt-3">
         <div class="col-12 col-lg-4 container-program">
@@ -114,6 +125,7 @@
             $('.spinner-category').removeClass('d-none')
             $('.content-category').addClass('d-none')
             $('.list-program').empty()
+            $('.filter-program').addClass('d-none')
             const url = '<?= base_url('api/programs') ?>'
             let html = ''
             let program = $('.list-program')
@@ -139,6 +151,15 @@
                         programs
                     } = data.data
                     //looping categories
+
+                    if ($('#query').val() != '' || $('#location').val() != '') {
+                        $('.filter-program').removeClass('d-none')
+                        $('#keyword').text($('#query').val())
+                        if ($('#location').val() != '') {
+                            $('#location-keyword').text($('#location').val())
+                        }
+                    }
+
                     if (programs.length == 0) {
                         $('.list-program').append(`<div class="col-md-12 text-center py-5">
                             <h6 class="fw-bold">Tidak ada program</h6>
@@ -153,7 +174,7 @@
                         //append to html
                         html += `<div class="card cursor-pointer" id="program-${item.id}" onclick="getDetail(${item.id})">
                                     <div class="card-body">
-                                        ${slug == '' ? `<h6 class='h6'>${item.category_name}</h6>` : ''}
+                                        ${slug == '' ? `<h6 class='h6'><span class="badge rounded-pill bg-success">${item.category_name}</span></h6>` : ''}
                                         <p class="text-justify fw-bolder">${item.name}</p>
                                         <p class="text-justify">${item.organizer}</p>
                                         <p class="text-justify text-muted fs-6">${item.location}</p>
@@ -181,8 +202,32 @@
             })
         }
         getPrograms()
+
+        //disable button
+        $('#btn-search-program').attr('disabled', true)
+
+        $('#query').keyup(function(e) {
+            if ($('#query').val() == '') {
+                //disable button
+                $('#btn-search-program').attr('disabled', true)
+            } else {
+                $('#btn-search-program').attr('disabled', false)
+            }
+        })
+
         $('#btn-search-program').click(function() {
+            if ($('#query').val() == '') {
+                return
+            }
             getPrograms()
+        })
+
+        $('#reset-filter').click(function() {
+            $('#query').val('')
+            $('#location').val('')
+            getPrograms()
+            $('.filter-program').addClass('d-none')
+            $('#btn-search-program').attr('disabled', true)
         })
     });
 </script>

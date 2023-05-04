@@ -268,3 +268,7 @@ a:hover {
 .container-detail-program {
   min-height: 700px;
 }
+
+.text-underlined {
+  text-decoration: underline;
+}
