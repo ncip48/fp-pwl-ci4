@@ -10,6 +10,7 @@ class ProgramSeeder extends Seeder
     {
         $data = [
             'category_id' => 1,
+            'kode_program' => 'BEA-001',
             'name' => 'Beasiswa PPA',
             'description' => 'Beasiswa PPA adalah beasiswa yang diberikan kepada mahasiswa yang berprestasi dan berkebutuhan khusus',
             'organizer' => 'Universitas Amikom Yogyakarta',

@@ -93,18 +93,26 @@
                     } = data.data
                     //looping categories
                     //append to html
-                    html += `<h6 class='h6'>${program.category_name}</h6>
-                                    <p class="text-justify fw-bolder">${program.name}</p>
-                                    <p class="text-justify">${program.organizer}</p>
-                                    <p class="text-justify text-muted fs-6">${program.location}</p>
-                                    <p class="text-justify">${program.description}</p>
-                                    <p class="text-justify text-muted fs-6">Kuota: ${program.quota}</p>
-                                    <p class="text-justify text-muted fs-6">Tanggal: ${program.date}</p>
-                                    <p class="text-justify text-muted fs-6">Waktu: ${program.time}</p>
-                                    <p class="text-justify text-muted fs-6">Kontak: ${program.contact}</p>
-                                    <p class="text-justify text-muted fs-6">Link: <a href="${program.link}" target="_blank">${program.link}</a></p>`
+                    html += `<h4 class="fw-bold">Informasi Kegiatan</h4>
+                        <hr />
+                        <h6 class='h6'><span class="badge rounded-pill bg-success">${program.category_name}</span></h6>
+                        <p class="text-justify fw-bolder h5">${program.name}</p>
+                        <p class="text-justify mb-3">${program.organizer} di ${program.location}</p>
+                        <small class="text-justify text-muted">Kode Program</small>
+                        <p class="text-justify mb-1">${program.kode_program}</p>
+                        <small class="text-justify text-muted">Kuota</small>
+                        <p class="text-justify mb-1">${program.slot} peserta</p>
+                        <small class="text-justify text-muted">Periode Kegiatan</small>
+                        <p class="text-justify mb-3">${program.start_program} - ${program.end_program} (0 bulan)</p>
+                        <hr />
+                        <h6 class="h6 fw-bold">Deskripsi Kegiatan</h6>
+                        <p class="text-justify">${program.description}</p>
+                        <hr />
+                        <h6 class="h6 fw-bold">Kualifikasi</h6>
+                        <p class="text-justify">${program.qualification}</p>`
                     //append to program
                     detail_program.append(html)
+                    $('.card').removeClass('h-100')
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
                 },
@@ -126,6 +134,7 @@
             $('.content-category').addClass('d-none')
             $('.list-program').empty()
             $('.filter-program').addClass('d-none')
+            $('.card').addClass('h-100')
             const url = '<?= base_url('api/programs') ?>'
             let html = ''
             let program = $('.list-program')
@@ -182,6 +191,16 @@
                                 </div>`
                     })
                     //append to program
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
+                    program.append(html)
                     program.append(html)
                     $('.spinner-category').addClass('d-none')
                     $('.content-category').removeClass('d-none')
