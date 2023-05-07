@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-files d-block mt-2">
+            <div class="card card-files d-none mt-2">
                 <div class="card-header bg-white">
                     <h4 class="fw-bold">Berkas</h4>
                 </div>
@@ -138,6 +138,7 @@
                     $('.card-content').removeClass('h-100')
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
+                    $('.card-files').removeClass('d-none')
                     var fileHtml = $('.files')
                     fileHtml.empty()
                     var files = program.files
@@ -146,7 +147,7 @@
                     } else {
                         files.map((item, index) => {
                             fileHtml.append(`<a class="d-flex align-items-center cursor-pointer text-dark">
-                            <i class="bi bi-file-earmark-pdf-fill me-2"></i> <span class="fw-bold fs-6">Panduan Pendaftaran</span>
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i> <span class="fw-bold fs-6">${item.name}</span>
                         </a>`)
                         })
                     }
@@ -171,6 +172,7 @@
             $('.filter-program').addClass('d-none')
             $('.card-content').addClass('h-100')
             $('.card-header-detail').addClass('d-none')
+            $('.card-files').addClass('d-none')
             const url = '<?= base_url('api/programs') ?>'
             let html = ''
             let program = $('.list-program')
