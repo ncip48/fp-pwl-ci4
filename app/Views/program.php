@@ -84,11 +84,11 @@
         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fs-6" id="staticBackdropLabel"></h5>
+                    <h5 class="modal-title fs-6 fw-bold" id="staticBackdropLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span class="text-muted">Dokumen ini tidak perlu di download, dokumen ini hanya template yang akan diisi langsung pada saat mendaftar</span>
+                    <span class="text-danger">Dokumen ini tidak perlu di download, dokumen ini hanya template yang akan diisi langsung pada saat mendaftar</span>
                     <div class="modal-body-files">
 
                     </div>
@@ -302,7 +302,7 @@
             var title = button.data('title')
             modal.find('.modal-title').text(title)
             //find modal-body-files then append pdf and add #toolbar=0
-            modal.find('.modal-body-files').html(`<object type="application/pdf" data="<?= base_url('file/pdf/') ?>${pdf}#toolbar=0" width="100%" height="500" style="height: 85vh;">No Support</object>`)
+            modal.find('.modal-body-files').html(`<object type="application/pdf" data="<?= base_url('file/pdf/') ?>${pdf}#toolbar=0" width="100%" height="500" style="height: 85vh;pointer-events:none">No Support</object>`)
         })
     });
 </script>
