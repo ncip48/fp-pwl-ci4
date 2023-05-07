@@ -42,7 +42,7 @@
     </div>
     <div class="row mt-3">
         <div class="col-12 col-lg-4 container-program">
-            <div class="d-flex justify-content-center spinner-category py-5">
+            <div class="d-flex justify-content-center spinner-category py-5 align-items-center">
                 <span class="spinner-grow spinner-grow-md text-dark me-2" role="status" aria-hidden="true">
                 </span>
                 Memuat...
@@ -51,7 +51,10 @@
             </div>
         </div>
         <div class="col-12 col-lg-8 container-detail-program">
-            <div class="card h-100">
+            <div class="card h-100 card-content">
+                <div class="card-header card-header-detail d-none bg-white">
+                    <h4 class="fw-bold">Informasi Kegiatan</h4>
+                </div>
                 <div class="card-body">
                     <div class="d-flex d-none justify-content-center spinner-detail py-5 h-100 align-items-center">
                         <span class="spinner-grow spinner-grow-md text-dark me-2" role="status" aria-hidden="true">
@@ -61,6 +64,13 @@
                     <div class="hidden-md-up content-detail h-100">
                         <span class="text-muted detail-program d-flex justify-content-center align-items-center h-100">Pilih program dahulu yang ingin kamu ikuti</span>
                     </div>
+                </div>
+            </div>
+            <div class="card card-files d-block mt-2">
+                <div class="card-header bg-white">
+                    <h4 class="fw-bold">Berkas</h4>
+                </div>
+                <div class="card-body">
                 </div>
             </div>
         </div>
@@ -79,6 +89,7 @@
             let detail_program = $('.content-detail')
             $('.spinner-detail').removeClass('d-none')
             $('.content-detail').addClass('d-none')
+            $('.card-header-detail').addClass('d-none')
             detail_program.empty()
             $.ajax({
                 type: 'GET',
@@ -93,17 +104,25 @@
                     } = data.data
                     //looping categories
                     //append to html
-                    html += `<h4 class="fw-bold">Informasi Kegiatan</h4>
-                        <hr />
-                        <h6 class='h6'><span class="badge rounded-pill bg-success">${program.category_name}</span></h6>
-                        <p class="text-justify fw-bolder h5">${program.name}</p>
-                        <p class="text-justify mb-3">${program.organizer} di ${program.location}</p>
+                    html += `
+                        <div class="d-lg-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>
+                                <img src="<?= base_url('images/program/') ?>${program.image}" class="rounded mt-2" alt="..." height="70" width="70">
+                                <p class="text-justify fw-bolder h5 mt-1">${program.name}</p>
+                                <p class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1"></i>${program.organizer} di ${program.location}</p>
+                            </div>
+                            <div class="d-flex" align-items-center>
+                                <button class="btn btn-primary h-100 fw-bold px-4 py-2 me-2"><i class="bi bi-pencil-square me-2"></i>Daftar</button>
+                                <button class="btn btn-danger h-100 fw-bold px-3 py-2"><i class="bi bi-heart"></i></button>
+                            </div>
+                        </div>
                         <small class="text-justify text-muted">Kode Program</small>
-                        <p class="text-justify mb-1">${program.kode_program}</p>
+                        <p class="text-justify mb-1"><i class="bi bi-tag-fill me-1"></i>${program.kode_program}</p>
                         <small class="text-justify text-muted">Kuota</small>
-                        <p class="text-justify mb-1">${program.slot} peserta</p>
+                        <p class="text-justify mb-1"><i class="bi bi-person-fill me-1"></i>${program.slot} peserta</p>
                         <small class="text-justify text-muted">Periode Kegiatan</small>
-                        <p class="text-justify mb-3">${program.start_program} - ${program.end_program} (0 bulan)</p>
+                        <p class="text-justify mb-3"><i class="bi bi-calendar3 me-1"></i>${program.start_program} - ${program.end_program} (${program.duration})</p>
                         <hr />
                         <h6 class="h6 fw-bold">Deskripsi Kegiatan</h6>
                         <p class="text-justify">${program.description}</p>
@@ -112,7 +131,8 @@
                         <p class="text-justify">${program.qualification}</p>`
                     //append to program
                     detail_program.append(html)
-                    $('.card').removeClass('h-100')
+                    $('.card-header-detail').removeClass('d-none')
+                    $('.card-content').removeClass('h-100')
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
                 },
@@ -134,7 +154,8 @@
             $('.content-category').addClass('d-none')
             $('.list-program').empty()
             $('.filter-program').addClass('d-none')
-            $('.card').addClass('h-100')
+            $('.card-content').addClass('h-100')
+            $('.card-header-detail').addClass('d-none')
             const url = '<?= base_url('api/programs') ?>'
             let html = ''
             let program = $('.list-program')
@@ -183,10 +204,10 @@
                         //append to html
                         html += `<div class="card cursor-pointer" id="program-${item.id}" onclick="getDetail(${item.id})">
                                     <div class="card-body">
-                                        ${slug == '' ? `<h6 class='h6'><span class="badge rounded-pill bg-success">${item.category_name}</span></h6>` : ''}
+                                        ${slug == '' ? `<h6 class='h6'><span class="badge rounded bg-success">${item.category_name}</span></h6>` : ''}
                                         <p class="text-justify fw-bolder">${item.name}</p>
                                         <p class="text-justify">${item.organizer}</p>
-                                        <p class="text-justify text-muted fs-6">${item.location}</p>
+                                        <small class="text-justify text-muted"><i class="bi bi-geo-alt-fill"></i> ${item.location}</small>
                                     </div>
                                 </div>`
                     })

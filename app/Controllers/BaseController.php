@@ -76,6 +76,7 @@ abstract class BaseController extends Controller
     /**
      * Mendapatkan status beasiswa
      * @var status
+     * @return status
      */
     public function getStatusBeasiswa($status)
     {
@@ -88,5 +89,115 @@ abstract class BaseController extends Controller
         } else if ($status == 3) {
             return "Ditolak";
         }
+    }
+
+    /**
+     * Format date to indonesia
+     * @var date
+     * @var format
+     * @return date
+     */
+    public function formatDateIndo($date, $format = "day monthLess year")
+    {
+        $date = date_create($date);
+        // $result = "";
+        $f = $format;
+
+        $month = [
+            "01" => "Januari",
+            "02" => "Februari",
+            "03" => "Maret",
+            "04" => "April",
+            "05" => "Mei",
+            "06" => "Juni",
+            "07" => "Juli",
+            "08" => "Agustus",
+            "09" => "September",
+            "10" => "Oktober",
+            "11" => "November",
+            "12" => "Desember",
+        ];
+
+        $monthLess = [
+            "01" => "Jan",
+            "02" => "Feb",
+            "03" => "Mar",
+            "04" => "Apr",
+            "05" => "Mei",
+            "06" => "Jun",
+            "07" => "Jul",
+            "08" => "Agu",
+            "09" => "Sep",
+            "10" => "Okt",
+            "11" => "Nov",
+            "12" => "Des",
+        ];
+
+        //if $f includes "day" then add date_format to $result
+        if (str_contains($format, "day")) {
+            $f = str_replace("day", date_format($date, "d"), $f);
+        }
+
+        //if $f includes "monthName" then add month name to $result
+        if (str_contains($format, "monthName")) {
+            $f = str_replace("monthName", $month[date_format($date, "m")], $f);
+        }
+
+        //if $f includes "monthLess" then add month name to $result
+        if (str_contains($format, "monthLess")) {
+            $f = str_replace("monthLess", $monthLess[date_format($date, "m")], $f);
+        }
+
+        //if $f includes "month" then add date_format to $result
+        if (str_contains($format, "month")) {
+            $f = str_replace("month", date_format($date, "m"), $f);
+        }
+
+        //if $f includes "year" then add date_format to $result
+        if (str_contains($format, "year")) {
+            $f = str_replace("year", date_format($date, "Y"), $f);
+        }
+
+        //if $f includes "hour" then add date_format to $result
+        if (str_contains($format, "hour")) {
+            $f = str_replace("hour", date_format($date, "H"), $f);
+        }
+
+        //if $f includes "minute" then add date_format to $result
+        if (str_contains($format, "minute")) {
+            $f = str_replace("minute", date_format($date, "i"), $f);
+        }
+
+        //if $f includes "second" then add date_format to $result
+        if (str_contains($format, "second")) {
+            $f = str_replace("second", date_format($date, "s"), $f);
+        }
+
+        return $f;
+    }
+
+    /**
+     * Calculate duration between start and end
+     * @var start
+     * @var end
+     * @return duration
+     */
+    public function calculateDuration($start, $end)
+    {
+        $start = date_create($start);
+        $end = date_create($end);
+        $diff = date_diff($start, $end);
+        $day = $diff->format("%a");
+        //if day more than 30 or 31 then calculate the month
+        if ($day > 30) {
+            $month = $diff->format("%m");
+            //if month more than 12 then calculate the year
+            if ($month > 12) {
+                $year = $diff->format("%y");
+                return $year . " tahun " . $month . " bulan";
+            }
+            return $month . " bulan";
+        }
+        return $diff->format("%a hari");
     }
 }

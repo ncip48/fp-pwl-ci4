@@ -44,6 +44,16 @@ class Program extends BaseController
             ->join('categories', 'categories.id = programs.category_id')
             ->where('programs.id', $id)
             ->first();
+
+        if (!$program) {
+            return $this->getResponse('Program tidak ditemukan', [], 404);
+        }
+
+        $program['duration'] = $this->calculateDuration($program['start_program'], $program['end_program']);
+        //change the start_program and end_program to date format
+        $program['start_program'] = $this->formatDateIndo($program['start_program']);
+        $program['end_program'] = $this->formatDateIndo($program['end_program']);
+
         $data = [
             'program' => $program,
         ];

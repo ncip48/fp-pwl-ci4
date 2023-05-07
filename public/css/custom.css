@@ -276,3 +276,12 @@ a:hover {
 .text-underlined {
   text-decoration: underline;
 }
+
+.container-detail-program .card-header {
+  border-radius: 16px 16px 0px 0px;
+  padding: 16px !important;
+}
+
+.container-detail-program .card-header h4 {
+  margin-bottom: 0px;
+}
