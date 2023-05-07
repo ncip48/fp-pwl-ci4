@@ -88,7 +88,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span class="text-muted">Dokumen ini tidak perlu di download, dokumen ini akan ada fitur isi langsung</span>
+                    <span class="text-muted">Dokumen ini tidak perlu di download, dokumen ini hanya template yang akan diisi langsung pada saat mendaftar</span>
                     <div class="modal-body-files">
 
                     </div>
