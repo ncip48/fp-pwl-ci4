@@ -55,7 +55,7 @@ class Program extends BaseController
         //change the start_program and end_program to date format
         $program['start_program'] = $this->formatDateIndo($program['start_program']);
         $program['end_program'] = $this->formatDateIndo($program['end_program']);
-        $program['files'] = $template->select('id,name,pdf')->where('id_program', $id)->findAll();
+        $program['files'] = $template->select('id,name,pdf,html')->where('id_program', $id)->findAll();
 
         $data = [
             'program' => $program,

@@ -78,7 +78,24 @@
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fs-6" id="staticBackdropLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span class="text-muted">Dokumen ini tidak perlu di download, dokumen ini akan ada fitur isi langsung</span>
+                    <div class="modal-body-files">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?= $this->endSection() ?>
@@ -146,7 +163,7 @@
                         $('.files').append(`<span class="text-muted">Tidak ada berkas</span>`)
                     } else {
                         files.map((item, index) => {
-                            fileHtml.append(`<a class="d-flex align-items-center cursor-pointer text-dark">
+                            fileHtml.append(`<a class="d-flex align-items-center cursor-pointer text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-pdf='${item.pdf}' data-title='${item.name}'>
                             <i class="bi bi-file-earmark-pdf-fill me-2"></i> <span class="fw-bold fs-6">${item.name}</span>
                         </a>`)
                         })
@@ -275,6 +292,17 @@
             getPrograms()
             $('.filter-program').addClass('d-none')
             $('#btn-search-program').attr('disabled', true)
+        })
+
+        //pass staticBackdrop modal data-pdf to modal-body-files
+        $('#staticBackdrop').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var pdf = button.data('pdf') // Extract info from data-* attributes
+            var modal = $(this)
+            var title = button.data('title')
+            modal.find('.modal-title').text(title)
+            //find modal-body-files then append pdf and add #toolbar=0
+            modal.find('.modal-body-files').html(`<object type="application/pdf" data="<?= base_url('file/pdf/') ?>${pdf}#toolbar=0" width="100%" height="500" style="height: 85vh;">No Support</object>`)
         })
     });
 </script>
