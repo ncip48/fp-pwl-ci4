@@ -5,6 +5,7 @@ namespace App\Controllers\Api;
 use App\Controllers\BaseController;
 use App\Models\Category;
 use App\Models\Program as ModelsProgram;
+use App\Models\TemplateDocument;
 
 class Program extends BaseController
 {
@@ -39,6 +40,7 @@ class Program extends BaseController
     public function detail($id)
     {
         $program = new ModelsProgram();
+        $template = new TemplateDocument();
         $program = $program->select('programs.*')
             ->select('categories.name as category_name')
             ->join('categories', 'categories.id = programs.category_id')
@@ -53,6 +55,7 @@ class Program extends BaseController
         //change the start_program and end_program to date format
         $program['start_program'] = $this->formatDateIndo($program['start_program']);
         $program['end_program'] = $this->formatDateIndo($program['end_program']);
+        $program['files'] = $template->select('id,name,pdf')->where('id_program', $id)->findAll();
 
         $data = [
             'program' => $program,

@@ -71,6 +71,9 @@
                     <h4 class="fw-bold">Berkas</h4>
                 </div>
                 <div class="card-body">
+                    <div class="d-flex flex-column files">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -135,6 +138,18 @@
                     $('.card-content').removeClass('h-100')
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
+                    var fileHtml = $('.files')
+                    fileHtml.empty()
+                    var files = program.files
+                    if (files.length == 0) {
+                        $('.files').append(`<span class="text-muted">Tidak ada berkas</span>`)
+                    } else {
+                        files.map((item, index) => {
+                            fileHtml.append(`<a class="d-flex align-items-center cursor-pointer text-dark">
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i> <span class="fw-bold fs-6">Panduan Pendaftaran</span>
+                        </a>`)
+                        })
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.log(error)
