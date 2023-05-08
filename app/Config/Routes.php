@@ -60,6 +60,7 @@ $routes->group('api', static function ($routes) {
     $routes->post('generate-pdf', 'Api\Pdf::generatePdf');
     $routes->post('daftar-program', 'Api\Program::daftarProgram');
     $routes->get('kegiatanku', 'Api\Kegiatan::kgetiatanku');
+    $routes->get('kegiatan/(:any)', 'Api\Kegiatan::detail/$1');
 });
 
 /*

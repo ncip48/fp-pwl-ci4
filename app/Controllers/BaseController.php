@@ -91,6 +91,17 @@ abstract class BaseController extends Controller
         }
     }
 
+    public function getStatus($status)
+    {
+        if ($status == 0) {
+            return "Diproses";
+        } else if ($status == 1) {
+            return "Diterima";
+        } else if ($status == 2) {
+            return "Ditolak";
+        }
+    }
+
     /**
      * Format date to indonesia
      * @var date

@@ -116,7 +116,7 @@
 <script>
     $(document).ready(function() {
         getDetail = function(id) {
-            const url = '<?= base_url('api/program/') ?>' + id
+            const url = '<?= base_url('api/kegiatan/') ?>' + id
             let html = ''
             let detail_program = $('.content-detail')
             $('.spinner-detail').removeClass('d-none')
@@ -246,7 +246,10 @@
                         } = item
                         html += `<div class="card cursor-pointer" id="kegiatan-${program.id}" onclick="getDetail(${program.id})">
                                     <div class="card-body">
-                                        ${slug == '' ? `<h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>` : ''}
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>
+                                            <span class="text-muted fst-italic fs-6">${item.statusText}</span>
+                                        </div>
                                         <p class="text-justify fw-bolder">${program.name}</p>
                                         <p class="text-justify">${program.organizer}</p>
                                         <small class="text-justify text-muted"><i class="bi bi-geo-alt-fill"></i> ${program.location}</small>
