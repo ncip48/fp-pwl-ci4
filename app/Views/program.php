@@ -155,7 +155,7 @@
                             </div>
                             <div class="d-flex" align-items-center>
                                 <button class="btn btn-primary h-100 fw-bold px-4 py-2 me-2" id="daftar-program" ${program.is_daftar ? "disabled" : ""}><i class="bi bi-pencil-square me-2"></i>${program.is_daftar ? "Telah Mendaftar" : "Daftar"}</button>
-                                <button class="btn btn-danger h-100 fw-bold px-3 py-2" data-bs-toggle="modal" data-bs-target="#modalRegister"><i class="bi bi-heart"></i></button>
+                                <button class="btn btn-white h-100 fw-bold px-3 py-2" data-bs-toggle="modal" data-bs-target="#modalRegister"><i class="bi bi-heart"></i></button>
                             </div>
                         </div>
                         <small class="text-justify text-muted">Kode Program</small>
