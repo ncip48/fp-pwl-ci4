@@ -248,7 +248,7 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>
-                                            <span class="text-muted fst-italic fs-6">${item.statusText}</span>
+                                            <small class="text-muted fst-italic">${item.statusText}</small>
                                         </div>
                                         <p class="text-justify fw-bolder">${program.name}</p>
                                         <p class="text-justify">${program.organizer}</p>
