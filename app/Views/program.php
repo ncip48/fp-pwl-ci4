@@ -242,6 +242,8 @@
                         $('#keyword').text($('#query').val())
                         if ($('#location').val() != '') {
                             $('#location-keyword').text($('#location').val())
+                        } else {
+                            $('#location-keyword').text('Semua Lokasi')
                         }
                     }
 
@@ -300,10 +302,19 @@
             }
         })
 
-        $('#btn-search-program').click(function() {
-            if ($('#query').val() == '') {
-                return
+        $('#location').keyup(function(e) {
+            if ($('#location').val() == '') {
+                //disable button
+                $('#btn-search-program').attr('disabled', true)
+            } else {
+                $('#btn-search-program').attr('disabled', false)
             }
+        })
+
+        $('#btn-search-program').click(function() {
+            // if ($('#query').val() == '' || $('#location').val() == '') {
+            //     return
+            // }
             getPrograms()
         })
 
