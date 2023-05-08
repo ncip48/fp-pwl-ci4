@@ -96,6 +96,24 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalRegister" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" id="modal-dialog-msg">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0 title-message">
+                    <h5 class="modal-title fs-6 fw-bold" id="modalRegisterLabel">Pendaftaran Berhasil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="icon-message" class="d-flex justify-content-center"></div>
+                    <span class="fs-6 modal-message">Pendaftaran berhasil, silahkan lengkapi dokumen yang dibutuhkan di bagian <b>kegiatanku</b></span>
+                </div>
+                <div class="modal-footer p-0 border-0">
+                    <div id="btn-message" class="m-0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?= $this->endSection() ?>
@@ -110,11 +128,14 @@
             $('.spinner-detail').removeClass('d-none')
             $('.content-detail').addClass('d-none')
             $('.card-header-detail').addClass('d-none')
+            $('.card-files').addClass('d-none')
+            $('.card-content').addClass('h-100')
             detail_program.empty()
             $.ajax({
                 type: 'GET',
                 url,
                 success: function(data, status) {
+                    detail_program.empty()
                     //handle if error
                     if (data.status == 'error') {
                         throw new Error(data.message)
@@ -125,7 +146,7 @@
                     //looping categories
                     //append to html
                     html += `
-                        <div class="d-lg-flex justify-content-between align-items-start">
+                        <div class="d-lg-flex justify-content-between align-items-start" id="program-show" data-id="${program.id}">
                             <div>
                                 <h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>
                                 <img src="<?= base_url('images/program/') ?>${program.image}" class="rounded mt-2" alt="..." height="70" width="70">
@@ -133,8 +154,8 @@
                                 <p class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1"></i>${program.organizer} di ${program.location}</p>
                             </div>
                             <div class="d-flex" align-items-center>
-                                <button class="btn btn-primary h-100 fw-bold px-4 py-2 me-2"><i class="bi bi-pencil-square me-2"></i>Daftar</button>
-                                <button class="btn btn-danger h-100 fw-bold px-3 py-2"><i class="bi bi-heart"></i></button>
+                                <button class="btn btn-primary h-100 fw-bold px-4 py-2 me-2" id="daftar-program" ${program.is_daftar ? "disabled" : ""}><i class="bi bi-pencil-square me-2"></i>${program.is_daftar ? "Telah Mendaftar" : "Daftar"}</button>
+                                <button class="btn btn-danger h-100 fw-bold px-3 py-2" data-bs-toggle="modal" data-bs-target="#modalRegister"><i class="bi bi-heart"></i></button>
                             </div>
                         </div>
                         <small class="text-justify text-muted">Kode Program</small>
@@ -301,8 +322,55 @@
             var modal = $(this)
             var title = button.data('title')
             modal.find('.modal-title').text(title)
-            //find modal-body-files then append pdf and add #toolbar=0
-            modal.find('.modal-body-files').html(`<object type="application/pdf" data="<?= base_url('file/pdf/') ?>${pdf}#toolbar=0" width="100%" height="500" style="height: 85vh;pointer-events:none">No Support</object>`)
+            //find modal-body-files then append pdf and add #toolbar=0 and set height to matched pdf height
+
+            modal.find('.modal-body-files').html(`<object type="application/pdf" data="<?= base_url('file/pdf/') ?>${pdf}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
+        })
+    });
+
+    $(document).on('click', '#daftar-program', function(e) {
+        const url = '<?= base_url('api/daftar-program') ?>'
+        $('#icon-message').empty();
+        $('#btn-message').empty();
+        $('#daftar-program').attr('disabled', true)
+        //fill with spinner
+        $('#daftar-program').html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>`)
+        let formData = {
+            id_program: $('#program-show').attr('data-id'),
+        }
+        $.ajax({
+            type: 'POST',
+            url,
+            data: formData,
+            dataType: 'json',
+            encode: true,
+            success: function(data, status) {
+                //handle if error
+                if (data.status == 'error') {
+                    throw new Error(data.message)
+                }
+                $('#modal-dialog-msg').removeClass('modal-sm')
+                $('#modalRegister').modal('show')
+                $('#daftar-program').attr('disabled', true)
+                $('#daftar-program').html('<i class="bi bi-pencil-square me-2"></i>Telah Mendaftar')
+                //remove modal-sm in #modalRegister
+            },
+            error: function(xhr, status, error) {
+                // console.log('error', error, status, xhr)
+                $('#modal-dialog-msg').addClass('modal-sm')
+                $('#icon-message').html('<i class="bi bi-x-circle-fill fs-1 text-danger"></i>')
+                $('#modalRegisterLabel').text('Unauthorized')
+                $('.modal-message').text(xhr.responseJSON.msg)
+                //center $.modal-message
+                $('.modal-message').addClass('d-flex justify-content-center align-items-center fw-bold text-danger')
+                $('#modalRegister').modal('show')
+                //display none modal-header in modalRegister
+                $('.title-message').addClass('d-none')
+                $('#btn-message').addClass('w-100')
+                $('#btn-message').html(`<div class="d-grid gap-2"><button type="button" class="btn btn-danger fw-bold border-top-0" data-bs-dismiss="modal">Tutup</button></div>`)
+                $('#daftar-program').attr('disabled', false)
+                $('#daftar-program').html('<i class="bi bi-pencil-square me-2"></i>Daftar')
+            }
         })
     });
 </script>

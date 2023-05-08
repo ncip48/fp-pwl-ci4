@@ -57,6 +57,7 @@ $routes->group('api', static function ($routes) {
     $routes->get('program/(:any)', 'Api\Program::detail/$1');
     $routes->post('pdf', 'Api\Pdf::upload');
     $routes->post('generate-pdf', 'Api\Pdf::generatePdf');
+    $routes->post('daftar-program', 'Api\Program::daftarProgram');
 });
 
 /*

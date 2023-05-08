@@ -40,8 +40,6 @@
 
     <script>
         window.jsPDF = window.jspdf.jsPDF;
-        window.html2canvas = html2canvas;
-        window.dompurify = DOMPurify;
 
         $(document).ready(function() {
             $("body").tooltip({
