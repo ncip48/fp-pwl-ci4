@@ -4,14 +4,13 @@
 
 <div class="container program mt-4">
     <div class="d-flex align-items-center mb-2">
-        <h3 class="fw-bold me-2 mb-0"><?= $category ?? "Semua Program" ?></h3>
+        <h3 class="fw-bold me-2 mb-0">Kegiatanku</h3>
     </div>
-    <div class="card p-2">
+    <!-- <div class="card p-2">
         <div class="card-body">
             <div class="row g-4">
                 <div class="col-12 col-lg-5">
                     <div class="input-group mb-0">
-                        <!-- input with icon in left bootstrap 5 -->
                         <span class="input-group-text bg-white border-end-0" id="button-addon1"><i class="bi bi-search bg-gray-input"></i></span>
                         <input id="query" name="query" type="text" class="form-control border-start-0 ps-0" placeholder="Cari program" aria-label="Cari program" aria-describedby="button-addon2" autocomplete="false">
                     </div>
@@ -20,7 +19,6 @@
 
                 <div class="col-12 col-lg-5">
                     <div class="input-group mb-0">
-                        <!-- input with icon in left bootstrap 5 -->
                         <span class="input-group-text bg-white border-end-0" id="button-addon1"><i class="bi bi-geo-alt-fill bg-gray-input"></i></span>
                         <input id="location" name="location" type="text" class="form-control border-start-0 ps-0" placeholder="Lokasi" aria-label="Lokasi" aria-describedby="button-addon2" autocomplete="false">
                     </div>
@@ -30,14 +28,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="mt-3 filter-program d-none">
+    </div> -->
+    <div class="mt-3 filter-kegiatan">
         <span class="badge bg-warning text-dark px-3 py-2 w-100 fw-normal fs-6 text-start text-wrap">
-            Mencari dengan kata kunci <span class="fw-bold" id="keyword">Semua Program</span>, Lokasi <span class="fw-bold" id="location-keyword">Semua Lokasi</span>
-            <span class="text-underlined cursor-pointer" id="reset-filter">
-                <i class="bi bi-x-circle-fill ms-2"></i>
-                Hapus Filter
-            </span>
+            Berikut merupakan kegiatan yang sedang di daftarkan, silahkan lengkapi dokumen yang dibutuhkan di masing masing kegiatan
         </span>
     </div>
     <div class="row mt-3">
@@ -47,7 +41,7 @@
                 </span>
                 Memuat...
             </div>
-            <div class="row hidden-md-up list-program gy-2 gx-1 content-category d-none">
+            <div class="row hidden-md-up list-kegiatan gy-2 gx-1 content-category d-none">
             </div>
         </div>
         <div class="col-12 col-lg-8 container-detail-program">
@@ -62,7 +56,7 @@
                         Memuat...
                     </div>
                     <div class="hidden-md-up content-detail h-100">
-                        <span class="text-muted detail-program d-flex justify-content-center align-items-center h-100">Pilih program dahulu yang ingin kamu ikuti</span>
+                        <span class="text-muted detail-program d-flex justify-content-center align-items-center h-100">Pilih kegiatan dahulu yang ingin dilihat</span>
                     </div>
                 </div>
             </div>
@@ -153,10 +147,6 @@
                                 <p class="text-justify fw-bolder h5 mt-1">${program.name}</p>
                                 <p class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1"></i>${program.organizer} di ${program.location}</p>
                             </div>
-                            <div class="d-flex" align-items-center>
-                                <button class="btn btn-primary h-100 fw-bold px-4 py-2 me-2" id="daftar-program" ${program.is_daftar ? "disabled" : ""}><i class="bi bi-pencil-square me-2"></i>${program.is_daftar ? "Telah Mendaftar" : "Daftar"}</button>
-                                <button class="btn btn-white h-100 fw-bold px-3 py-2" data-bs-toggle="modal" data-bs-target="#modalRegister"><i class="bi bi-heart"></i></button>
-                            </div>
                         </div>
                         <small class="text-justify text-muted">Kode Program</small>
                         <p class="text-justify mb-1"><i class="bi bi-tag-fill me-1"></i>${program.kode_program}</p>
@@ -203,28 +193,21 @@
                 }
             })
         }
-        const getPrograms = () => {
+        const getKegiatan = () => {
             $('.spinner-category').removeClass('d-none')
             $('.content-category').addClass('d-none')
-            $('.list-program').empty()
-            $('.filter-program').addClass('d-none')
+            $('.list-kegiatan').empty()
             $('.card-content').addClass('h-100')
             $('.card-header-detail').addClass('d-none')
             $('.card-files').addClass('d-none')
-            const url = '<?= base_url('api/programs') ?>'
+            const url = '<?= base_url('api/kegiatanku') ?>'
             let html = ''
-            let program = $('.list-program')
+            let activity = $('.list-kegiatan')
             let slug = "<?= $slug ?? '' ?>"
-            let formData = {
-                query: $('#query').val(),
-                location: $('#location').val(),
-                category: "<?= $slug ?? '' ?>",
-            }
-            $('.content-detail').html('<span class="text-muted detail-program d-flex justify-content-center align-items-center h-100">Pilih program dahulu yang ingin kamu ikuti</span>')
+            $('.content-detail').html('<span class="text-muted detail-program d-flex justify-content-center align-items-center h-100">Pilih kegiatan dahulu yang ingin dilihat</span>')
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url,
-                data: formData,
                 dataType: 'json',
                 encode: true,
                 success: function(data, status) {
@@ -233,12 +216,11 @@
                         throw new Error(data.message)
                     }
                     const {
-                        programs
+                        activities
                     } = data.data
                     //looping categories
 
                     if ($('#query').val() != '' || $('#location').val() != '') {
-                        $('.filter-program').removeClass('d-none')
                         $('#keyword').text($('#query').val())
                         if ($('#location').val() != '') {
                             $('#location-keyword').text($('#location').val())
@@ -247,29 +229,32 @@
                         }
                     }
 
-                    if (programs.length == 0) {
-                        $('.list-program').append(`<div class="col-md-12 text-center py-5">
-                            <h6 class="fw-bold">Tidak ada program</h6>
-                            <p class="text-center">Silahkan cari program lainnya</p>
+                    if (activities.length == 0) {
+                        $('.list-kegiatan').append(`<div class="col-md-12 text-center py-5">
+                            <h6 class="fw-bold">Tidak ada kegiatan</h6>
+                            <p class="text-center">Silahkan mendaftar program dahulu</p>
                         </div>`)
                         $('.spinner-category').addClass('d-none')
                         $('.content-category').removeClass('d-none')
 
                         return
                     }
-                    programs.map((item, index) => {
+                    activities.map((item, index) => {
                         //append to html
-                        html += `<div class="card cursor-pointer" id="program-${item.id}" onclick="getDetail(${item.id})">
+                        const {
+                            program
+                        } = item
+                        html += `<div class="card cursor-pointer" id="kegiatan-${program.id}" onclick="getDetail(${program.id})">
                                     <div class="card-body">
-                                        ${slug == '' ? `<h6 class='h6'><span class="badge rounded bg-success">${item.category_name}</span></h6>` : ''}
-                                        <p class="text-justify fw-bolder">${item.name}</p>
-                                        <p class="text-justify">${item.organizer}</p>
-                                        <small class="text-justify text-muted"><i class="bi bi-geo-alt-fill"></i> ${item.location}</small>
+                                        ${slug == '' ? `<h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>` : ''}
+                                        <p class="text-justify fw-bolder">${program.name}</p>
+                                        <p class="text-justify">${program.organizer}</p>
+                                        <small class="text-justify text-muted"><i class="bi bi-geo-alt-fill"></i> ${program.location}</small>
                                     </div>
                                 </div>`
                     })
                     //append to program
-                    program.append(html)
+                    activity.append(html)
                     $('.spinner-category').addClass('d-none')
                     $('.content-category').removeClass('d-none')
                     $('.spinner-detail').addClass('d-none')
@@ -281,50 +266,14 @@
                     $('.content-category').removeClass('d-none')
                     $('.spinner-detail').addClass('d-none')
                     $('.content-detail').removeClass('d-none')
-                    $('.list-program').append(`<div class="col-md-12 text-center py-5">
+                    $('.list-kegiatan').append(`<div class="col-md-12 text-center py-5">
                     <h6 class="fw-bold">Terjadi Kesalahan</h6>
                     <p class="text-center">Silahkan refresh halaman ini</p>
                 </div>`)
                 }
             })
         }
-        getPrograms()
-
-        //disable button
-        $('#btn-search-program').attr('disabled', true)
-
-        $('#query').keyup(function(e) {
-            if ($('#query').val() == '') {
-                //disable button
-                $('#btn-search-program').attr('disabled', true)
-            } else {
-                $('#btn-search-program').attr('disabled', false)
-            }
-        })
-
-        $('#location').keyup(function(e) {
-            if ($('#location').val() == '') {
-                //disable button
-                $('#btn-search-program').attr('disabled', true)
-            } else {
-                $('#btn-search-program').attr('disabled', false)
-            }
-        })
-
-        $('#btn-search-program').click(function() {
-            // if ($('#query').val() == '' || $('#location').val() == '') {
-            //     return
-            // }
-            getPrograms()
-        })
-
-        $('#reset-filter').click(function() {
-            $('#query').val('')
-            $('#location').val('')
-            getPrograms()
-            $('.filter-program').addClass('d-none')
-            $('#btn-search-program').attr('disabled', true)
-        })
+        getKegiatan()
 
         //pass staticBackdrop modal data-pdf to modal-body-files
         $('#staticBackdrop').on('show.bs.modal', function(event) {
@@ -370,8 +319,6 @@
                 }
                 $('#modal-dialog-msg').removeClass('modal-sm')
                 $('#modalRegister').modal('show')
-                $('#daftar-program').attr('disabled', true)
-                $('#daftar-program').html('<i class="bi bi-pencil-square me-2"></i>Telah Mendaftar')
                 //remove modal-sm in #modalRegister
             },
             error: function(xhr, status, error) {

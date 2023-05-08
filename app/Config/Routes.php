@@ -35,6 +35,7 @@ $routes->post('/auth/login', 'Auth::login');
 $routes->get('/mahasiswa', 'Dashboard::index', ['filter' => 'authGuard']);
 $routes->get('/program', 'Program::index');
 $routes->get('/program/(:any)', 'Program::detail/$1');
+$routes->get('/kegiatanku', 'Kegiatan::index', ['filter' => 'authGuard']);
 
 $routes->get('/mahasiswa/dashboard', 'Dashboard::index', ['filter' => 'authGuard']);
 $routes->get('/signature', 'Signature::index');
@@ -58,6 +59,7 @@ $routes->group('api', static function ($routes) {
     $routes->post('pdf', 'Api\Pdf::upload');
     $routes->post('generate-pdf', 'Api\Pdf::generatePdf');
     $routes->post('daftar-program', 'Api\Program::daftarProgram');
+    $routes->get('kegiatanku', 'Api\Kegiatan::kgetiatanku');
 });
 
 /*

@@ -101,7 +101,7 @@ class Program extends BaseController
             'id_program' => $id_program,
             'status' => 0,
             'kode' => 'KGT' . rand(1000, 9999),
-            'join_at' => date('Y-m-d H:i:s'),
+            'joined_at' => date('Y-m-d H:i:s'),
         ]);
 
         $notification = new Notification();
