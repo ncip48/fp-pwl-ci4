@@ -82,7 +82,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-8 my-2">
                                 <div class="pdf" id="printable">
@@ -93,7 +93,11 @@
                                 <div class="input-form">
 
                                 </div>
-                                <button id="savepdf" class="btn btn-warning">Submit Dokumen</button>
+                                <button id="savepdf" class="btn btn-primary w-100 mt-2">Submit Dokumen</button>
+                                <div class="d-flex flex-column mt-3">
+                                    <small class="text-danger">*Pastikan dokumen yang diisi sudah benar</small>
+                                    <small class="text-danger">*Dokumen yang sudah diisi tidak dapat diubah</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -408,7 +412,12 @@
         //loop through the input
         for (var i = 0; i < count; i++) {
             //append the input
-            input.append('<input type="text" class="form-control" placeholder="Input ' + (i + 1) + '" id="inputted' + i + '">');
+            input.append(`
+            <div class="mb-2">
+                <label class="form-label text-dark mb-1" for="inputted${i}">Input ${i + 1}</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Input ${i + 1}" id="inputted${i}">
+            </div>
+            `);
         }
 
         //loop through the input
