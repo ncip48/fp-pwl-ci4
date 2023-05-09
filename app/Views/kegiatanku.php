@@ -193,7 +193,7 @@
                             <i class="bi bi-file-earmark-pdf-fill me-2" style="position:relative"></i> <span class="fw-bold fs-6">${item.name}</span>
                         </div>
                         ${item.result !== null ?
-                            '<a  class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="${item.name}" data-pdf="${item.result}">Lihat</a>'
+                            '<a  class="btn btn-sm btn-outline-dark fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="'+item.name+'" data-pdf="'+item.result+'">Lihat</a>'
                         :
                             '<a id="isi-dokumen" class="btn btn-sm btn-outline-dark fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen '+item.name+'" data-pdf="${item.result}">Isi Dokumen</a>'
                         }
