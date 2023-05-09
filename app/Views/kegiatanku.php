@@ -93,7 +93,7 @@
                                 <div class="input-form">
 
                                 </div>
-                                <button id="savepdf" class="btn btn-primary w-100 mt-2">Submit Dokumen</button>
+                                <button id="savepdf" class="btn btn-primary w-100 mt-2 fw-bold">Submit Dokumen</button>
                                 <div class="d-flex flex-column mt-3">
                                     <small class="text-danger">*Pastikan dokumen yang diisi sudah benar</small>
                                     <small class="text-danger">*Dokumen yang sudah diisi tidak dapat diubah</small>
@@ -193,9 +193,9 @@
                             <i class="bi bi-file-earmark-pdf-fill me-2" style="position:relative"></i> <span class="fw-bold fs-6">${item.name}</span>
                         </div>
                         ${item.result !== null ?
-                            '<a  class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="${item.name}" data-pdf="${item.result}">Lihat</a>'
+                            '<a  class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="${item.name}" data-pdf="${item.result}">Lihat</a>'
                         :
-                            '<a id="isi-dokumen" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen '+item.name+'" data-pdf="${item.result}">Isi Dokumen</a>'
+                            '<a id="isi-dokumen" class="btn btn-sm btn-outline-dark fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen '+item.name+'" data-pdf="${item.result}">Isi Dokumen</a>'
                         }
                         </div>`)
                             $('#printable').html(item.html)
