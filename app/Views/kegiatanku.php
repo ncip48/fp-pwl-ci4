@@ -160,15 +160,15 @@
                                 <h6><span class="badge rounded bg-success">${program.category_name}</span></h6>
                                 <img src="<?= base_url('images/program/') ?>${program.image}" class="rounded mt-2" alt="..." height="70" width="70">
                                 <h5 class="text-justify fw-bolder mt-1">${program.name}</p>
-                                <h5 class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1"></i>${program.organizer} di ${program.location}</p>
+                                <h5 class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1" style="position:relative"></i>${program.organizer} di ${program.location}</p>
                             </div>
                         </div>
                         <small class="text-justify text-muted">Kode Program</small>
-                        <p class="text-justify mb-1"><i class="bi bi-tag-fill me-1"></i>${program.kode_program}</p>
+                        <p class="text-justify mb-1"><i class="bi bi-tag-fill me-1" style="position:relative"></i>${program.kode_program}</p>
                         <small class="text-justify text-muted">Kuota</small>
-                        <p class="text-justify mb-1"><i class="bi bi-person-fill me-1"></i>${program.slot} peserta</p>
+                        <p class="text-justify mb-1"><i class="bi bi-person-fill me-1" style="position:relative"></i>${program.slot} peserta</p>
                         <small class="text-justify text-muted">Periode Kegiatan</small>
-                        <p class="text-justify mb-3"><i class="bi bi-calendar3 me-1"></i>${program.start_program} - ${program.end_program} (${program.duration})</p>
+                        <p class="text-justify mb-3"><i class="bi bi-calendar3 me-1" style="position:relative"></i>${program.start_program} - ${program.end_program} (${program.duration})</p>
                         <hr />
                         <h6 class="fw-bold">Deskripsi Kegiatan</h6>
                         <p class="text-justify">${program.description}</p>
