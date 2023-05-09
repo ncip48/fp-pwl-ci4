@@ -285,3 +285,8 @@ a:hover {
 .container-detail-program .card-header h4 {
   margin-bottom: 0px;
 }
+
+.h6,
+h6 {
+  font-size: 1rem !important;
+}

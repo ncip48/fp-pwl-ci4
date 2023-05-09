@@ -82,9 +82,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span class="text-danger">Dokumen ini tidak perlu di download, dokumen ini hanya template yang akan diisi langsung pada saat mendaftar</span>
-                    <div class="modal-body-files">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 my-2">
+                                <div class="pdf" id="printable">
 
+                                </div>
+                            </div>
+                            <div class="col-lg-4 my-2">
+                                <div class="input-form">
+
+                                </div>
+                                <button id="savepdf" class="btn btn-warning">Submit Dokumen</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,10 +153,10 @@
                     html += `
                         <div class="d-lg-flex justify-content-between align-items-start" id="program-show" data-id="${program.id}">
                             <div>
-                                <h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>
+                                <h6><span class="badge rounded bg-success">${program.category_name}</span></h6>
                                 <img src="<?= base_url('images/program/') ?>${program.image}" class="rounded mt-2" alt="..." height="70" width="70">
-                                <p class="text-justify fw-bolder h5 mt-1">${program.name}</p>
-                                <p class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1"></i>${program.organizer} di ${program.location}</p>
+                                <h5 class="text-justify fw-bolder mt-1">${program.name}</p>
+                                <h5 class="text-justify mb-2"><i class="bi bi-geo-alt-fill me-1"></i>${program.organizer} di ${program.location}</p>
                             </div>
                         </div>
                         <small class="text-justify text-muted">Kode Program</small>
@@ -155,10 +166,10 @@
                         <small class="text-justify text-muted">Periode Kegiatan</small>
                         <p class="text-justify mb-3"><i class="bi bi-calendar3 me-1"></i>${program.start_program} - ${program.end_program} (${program.duration})</p>
                         <hr />
-                        <h6 class="h6 fw-bold">Deskripsi Kegiatan</h6>
+                        <h6 class="fw-bold">Deskripsi Kegiatan</h6>
                         <p class="text-justify">${program.description}</p>
                         <hr />
-                        <h6 class="h6 fw-bold">Kualifikasi</h6>
+                        <h6 class="fw-bold">Kualifikasi</h6>
                         <p class="text-justify">${program.qualification}</p>`
                     //append to program
                     detail_program.append(html)
@@ -174,9 +185,16 @@
                         $('.files').append(`<span class="text-muted">Tidak ada berkas</span>`)
                     } else {
                         files.map((item, index) => {
-                            fileHtml.append(`<a class="d-flex align-items-center cursor-pointer text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-pdf='${item.pdf}' data-title='${item.name}'>
-                            <i class="bi bi-file-earmark-pdf-fill me-2"></i> <span class="fw-bold fs-6">${item.name}</span>
-                        </a>`)
+                            fileHtml.append(`<div class="d-flex align-items-center justify-content-between"><div class="d-flex align-items-center text-dark">
+                            <i class="bi bi-file-earmark-pdf-fill me-2" style="position:relative"></i> <span class="fw-bold fs-6">${item.name}</span>
+                        </div>
+                        ${item.result !== null ?
+                            '<a  class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="${item.name}" data-pdf="${item.result}">Lihat</a>'
+                        :
+                            '<a id="isi-dokumen" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen '+item.name+'" data-pdf="${item.result}">Isi Dokumen</a>'
+                        }
+                        </div>`)
+                            $('#printable').html(item.html)
                         })
                     }
                 },
@@ -244,7 +262,7 @@
                         const {
                             program
                         } = item
-                        html += `<div class="card cursor-pointer" id="kegiatan-${program.id}" onclick="getDetail(${program.id})">
+                        html += `<div class="card cursor-pointer card-kegiatan-outer" id="kegiatan-${program.id}" onclick="getDetail(${program.id})">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <h6 class='h6'><span class="badge rounded bg-success">${program.category_name}</span></h6>
@@ -289,7 +307,27 @@
 
             modal.find('.modal-body-files').html(`<object type="application/pdf" data="<?= base_url('file/pdf/') ?>${pdf}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
         })
+
+
+        //find bi class
+        // var bi = $('.bi');
+        // bi.css('position', 'relative');
     });
+
+    $(document).on('click', '.card-kegiatan-outer', function(e) {
+        console.log('clicked')
+        //remove h6 height
+        $('.h6').css('height', 'auto');
+        //h5 
+        $('.h5').css('height', 'auto');
+        var bi = $('.bi');
+        bi.css('position', 'relative');
+        //change h6, h5 in class .content-detail to auto
+        var content_detail = $('.content-detail');
+        //search h6 and h5 in content-detail
+        content_detail.find('h6').css('height', 'auto');
+    })
+
 
     //detect modal #modalRegister open and then auto close after 3 seconds
     // $('#modalRegister').on('shown.bs.modal', function() {
@@ -341,6 +379,53 @@
                 $('#daftar-program').html('<i class="bi bi-pencil-square me-2"></i>Daftar')
             }
         })
+    });
+
+    $(document).on('click', '#isi-dokumen', function() {
+        //get the id page-container
+        var page = $('#page-container');
+        //change position to relative
+        page.css('position', 'relative');
+
+        var pdf = $('.pdf');
+        //find the inner pdf with {{input}}
+        var pdfContent = pdf.html().trim();
+        //count the number of {{input}}
+        var count = (pdfContent.match(/{{input}}/g) || []).length;
+        console.log(count);
+        //replace {{input}} with <div id="forminput"></div> and set the id with forminput + index
+        for (var i = 0; i < count; i++) {
+            pdfContent = pdfContent.replace(/{{input}}/, '<span class="divinput fw-bold" id="forminput' + i + '">Input ' + (i + 1) + '</span>');
+            //find child page-container first then set margin to 0
+            // pdfContent = pdfContent.replace('class="page w0 h0"', 'class="page w0 h0" style="margin:0;"');
+            // pdfContent = pdfContent.replace('class="page-container"', 'class="paxge-container w0"');
+        }
+        //set the pdf with the new content
+        pdf.html(pdfContent);
+
+        //get the input
+        var input = $('.input-form');
+        //loop through the input
+        for (var i = 0; i < count; i++) {
+            //append the input
+            input.append('<input type="text" class="form-control" placeholder="Input ' + (i + 1) + '" id="inputted' + i + '">');
+        }
+
+        //loop through the input
+        for (var i = 0; i < count; i++) {
+            //set the #forminput+index with the input when onchangetext
+            $('#inputted' + i).on('keyup', function() {
+                var index = $(this).attr('id').replace('inputted', '');
+                console.log(index);
+                let value
+                if ($(this).val() == '') {
+                    value = 'Input ' + (parseInt(index) + 1)
+                } else {
+                    value = $(this).val()
+                }
+                $('#forminput' + index).html(value);
+            });
+        }
     });
 </script>
 <?= $this->endSection() ?>
