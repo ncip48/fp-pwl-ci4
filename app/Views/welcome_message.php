@@ -97,30 +97,30 @@
         // page.css('position', 'relative');
     });
 
-    $('#savepdf').on('click', function() {
-        var print = $('#printable');
+    // $('#savepdf').on('click', function() {
+    //     var print = $('#printable');
 
-        var printContent = print.html();
-        //change the page-container inside printcontent to relative
-        printContent = '<html><head><title>Print</title></head><body>' + printContent + '</body></html>';
-        printContent = printContent.replace('class="page w0 h0"', 'class="page w0 h0" style="margin:0;"');
-        printContent = printContent.replace('position: absolute;', 'position: relative;');
-        //find class page then add style margin:0
+    //     var printContent = print.html();
+    //     //change the page-container inside printcontent to relative
+    //     printContent = '<html><head><title>Print</title></head><body>' + printContent + '</body></html>';
+    //     printContent = printContent.replace('class="page w0 h0"', 'class="page w0 h0" style="margin:0;"');
+    //     printContent = printContent.replace('position: absolute;', 'position: relative;');
+    //     //find class page then add style margin:0
 
 
-        // ajax to path 'api/generate-pdf'
-        $.ajax({
-            url: '<?= base_url('api/generate-pdf') ?>',
-            type: 'POST',
-            data: {
-                html: printContent
-            },
-            success: function(result) {
-                //if success, redirect to path 'api/download-pdf'
-                console.log(result)
-                // window.location.href = 'api/download-pdf/' + result;
-            }
-        });
-    });
+    //     // ajax to path 'api/generate-pdf'
+    //     $.ajax({
+    //         url: '<?= base_url('api/generate-pdf') ?>',
+    //         type: 'POST',
+    //         data: {
+    //             html: printContent
+    //         },
+    //         success: function(result) {
+    //             //if success, redirect to path 'api/download-pdf'
+    //             console.log(result)
+    //             // window.location.href = 'api/download-pdf/' + result;
+    //         }
+    //     });
+    // });
 </script>
 <?= $this->endSection() ?>

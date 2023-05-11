@@ -48,11 +48,18 @@ class Auth extends BaseController
                         $session->set('user', $session_user);
                         $session->set('logged_in', TRUE);
                         $previous_season_url = $session->get('previous_url');
-                        if ($previous_season_url == null) {
-                            $url = $this->request->getPost('previous_url');
+                        if ($user['role'] == 1) {
+                            if ($previous_season_url == null) {
+                                $url = $this->request->getPost('previous_url');
+                            } else {
+                                $url = $previous_season_url;
+                            }
+                        } elseif ($user['role'] == 99) {
+                            $url = '/admin';
                         } else {
-                            $url = $previous_season_url;
+                            $url = '/pengelola';
                         }
+
                         $data = [
                             'redirect' => $url,
                             'user' => $user,

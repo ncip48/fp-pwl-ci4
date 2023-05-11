@@ -316,6 +316,47 @@
         //find bi class
         // var bi = $('.bi');
         // bi.css('position', 'relative');
+
+        $('#savepdf').on('click', function() {
+            var print = $('#printable');
+
+            var printContent = print.html();
+            //change the page-container inside printcontent to relative
+            printContent = '<html><head><title>Print</title></head><body>' + printContent + '</body></html>';
+            printContent = printContent.replace('class="page w0 h0"', 'class="page w0 h0" style="margin:0;"');
+            printContent = printContent.replace('position: absolute;', 'position: relative;');
+            //find class page then add style margin:0
+
+            //check if all input is empty then alert
+            var input = $('.input-form');
+            var count = input.find('input').length;
+            var empty = 0;
+            for (var i = 0; i < count; i++) {
+                if ($('#inputted' + i).val() == '') {
+                    empty++;
+                }
+            }
+            if (empty > 0) {
+                alert('Harap isi semua input');
+                return;
+            }
+
+
+            // ajax to path 'api/generate-pdf'
+            // $.ajax({
+            //     url: '<?= base_url('api/generate-pdf') ?>',
+            //     type: 'POST',
+            //     data: {
+            //         html: printContent
+            //     },
+            //     success: function(result) {
+            //         //if success, redirect to path 'api/download-pdf'
+            //         console.log(result)
+            //         // window.location.href = 'api/download-pdf/' + result;
+            //     }
+            // });
+            console.log(printContent)
+        });
     });
 
     $(document).on('click', '.card-kegiatan-outer', function(e) {
