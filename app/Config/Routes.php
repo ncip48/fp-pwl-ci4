@@ -61,6 +61,7 @@ $routes->group('api', static function ($routes) {
     $routes->post('daftar-program', 'Api\Program::daftarProgram');
     $routes->get('kegiatanku', 'Api\Kegiatan::kgetiatanku');
     $routes->get('kegiatan/(:any)', 'Api\Kegiatan::detail/$1');
+    $routes->post('submit-dokumen', 'Api\Document::submit');
 });
 
 /*

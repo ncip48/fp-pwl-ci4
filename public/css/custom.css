@@ -290,3 +290,7 @@ a:hover {
 h6 {
   font-size: 1rem !important;
 }
+
+.border-0 {
+  border-radius: 0px !important;
+}
