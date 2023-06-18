@@ -94,7 +94,7 @@
 
                                 </div>
                                 <input id="id_template" type="hidden" />
-                                <button id="tutupdokumen" class="btn btn-primary w-100 mt-2 fw-bold" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">Submit Dokumen</button>
+                                <button id="tutupdokumen" class="btn btn-primary w-100 mt-2 fw-bold">Submit Dokumen</button>
                                 <div class="d-flex flex-column mt-3">
                                     <small class="text-danger">*Pastikan dokumen yang diisi sudah benar</small>
                                     <small class="text-danger">*Dokumen yang sudah diisi tidak dapat diubah</small>
@@ -157,7 +157,7 @@
                     <div id="btn-message" class="m-0 w-100">
                         <div class="d-flex">
                             <div class="d-grid gap-2 w-100"><button type="button" class="btn btn-primary fw-bold border-0" id="savepdf">YA</button></div>
-                            <div class="d-grid gap-2 w-100"><button type="button" class="btn btn-danger fw-bold border-0" data-bs-dismiss="modal">TIDAK</button></div>
+                            <div class="d-grid gap-2 w-100"><button type="button" class="btn btn-danger fw-bold border-0" data-bs-dismiss="modal" id="cancelpdf">TIDAK</button></div>
                         </div>
                     </div>
                 </div>
@@ -373,10 +373,16 @@
         $('#tutupdokumen').on('click', function() {
             //hide modal staticBackdrop
             $('#staticBackdrop').modal('hide')
+            $('#modalKonfirmasi').modal('show')
         })
 
         //detect modalKonfirmasi close
-        $('#modalKonfirmasi').on('hidden.bs.modal', function(event) {
+        // $('#modalKonfirmasi').on('hidden.bs.modal', function(event) {
+        //     $('#staticBackdrop').modal('show')
+        // })
+
+        $('#cancelpdf').on('click', function() {
+            $('#modalKonfirmasi').modal('hide')
             $('#staticBackdrop').modal('show')
         })
 
