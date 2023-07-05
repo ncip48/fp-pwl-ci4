@@ -19,4 +19,16 @@ class Program extends BaseController
 
         return view('pengelola/program/show', compact('programs'));
     }
+
+    public function create()
+    {
+        return view('pengelola/program/create');
+    }
+
+    public function edit($id)
+    {
+        $program = new ModelsProgram();
+        $program = $program->find($id);
+        return view('pengelola/program/edit', compact('program'));
+    }
 }
