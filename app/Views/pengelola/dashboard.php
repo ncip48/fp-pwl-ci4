@@ -34,7 +34,7 @@
                                     <h4 class="card-title text-white">Kategori</h4>
                                     <div class="ms-auto">
                                         <span class="btn btn-lg btn-info btn-circle d-flex align-items-center justify-content-center">
-                                            <i class="mdi mdi-account"></i>
+                                            <i class="mdi mdi-format-list-bulleted"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                     <h4 class="card-title text-white">Program</h4>
                                     <div class="ms-auto">
                                         <span class="btn btn-lg btn-info btn-circle d-flex align-items-center justify-content-center">
-                                            <i class="mdi mdi-account-circle"></i>
+                                            <i class="mdi mdi-beaker"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                     <h4 class="card-title text-white">User</h4>
                                     <div class="ms-auto">
                                         <span class="btn btn-lg btn-info btn-circle d-flex align-items-center justify-content-center">
-                                            <i class="mdi mdi-home-modern"></i>
+                                            <i class="mdi mdi-account"></i>
                                         </span>
                                     </div>
                                 </div>
