@@ -44,11 +44,11 @@ class Programs extends Migration
                 'type' => 'TEXT'
             ],
             'start_program' => [
-                'type' => 'DATETIME',
+                'type' => 'DATE',
                 'null' => true,
             ],
             'end_program' => [
-                'type' => 'DATETIME',
+                'type' => 'DATE',
                 'null' => true,
             ],
             'created_at' => [

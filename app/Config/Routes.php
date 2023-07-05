@@ -63,13 +63,14 @@ $routes->group('api', static function ($routes) {
     $routes->get('kegiatanku', 'Api\Kegiatan::kgetiatanku');
     $routes->get('kegiatan/(:any)', 'Api\Kegiatan::detail/$1');
     $routes->post('submit-dokumen', 'Api\Document::submit');
+    $routes->patch('program', 'Api\Program::updateProgram');
     $routes->delete('program/(:any)', 'Api\Program::deleteProgram/$1');
 });
 
 $routes->group('pengelola', static function ($routes) {
     $routes->get('dashboard', 'Pengelola\Dashboard::index', ['filter' => 'authGuard']);
     $routes->get('program', 'Pengelola\Program::index', ['filter' => 'authGuard']);
-    $routes->get('program/(:any)', 'Pengelola\Program::detail/$1', ['filter' => 'authGuard']);
+    $routes->get('program/(:any)', 'Pengelola\Program::edit/$1', ['filter' => 'authGuard']);
 });
 
 /*

@@ -25,6 +25,7 @@ $user = $session->get('user');
     <link href="<?= base_url('assets/dist/css/style.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/dist/css/datatables.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/dist/css/sweetalert.min.css') ?>" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

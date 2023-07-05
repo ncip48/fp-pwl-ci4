@@ -118,6 +118,39 @@ class Program extends BaseController
         return $this->getResponse('Pendaftaran berhasil, silahkan lengkapi dokumen yang dibutuhkan di bagian kegiatanku', $data);
     }
 
+    public function updateProgram()
+    {
+        $id = $this->request->getJsonVar('id');
+        $name = $this->request->getJsonVar('name');
+        $organizer = $this->request->getJsonVar('organizer');
+        $location = $this->request->getJsonVar('location');
+        $slot = $this->request->getJsonVar('slot');
+        $description = $this->request->getJsonVar('description');
+        $qualification = $this->request->getJsonVar('qualification');
+        $start_program = $this->request->getJsonVar('start_program');
+        $end_program = $this->request->getJsonVar('end_program');
+
+        $program = new ModelsProgram();
+        $program = $program->where('id', $id)->first();
+        if (!$program) {
+            return $this->getResponse('Program tidak ditemukan', [], 404);
+        }
+
+        $program = new ModelsProgram();
+        $program = $program->update($id, [
+            'name' => $name,
+            'organizer' => $organizer,
+            'location' => $location,
+            'slot' => $slot,
+            'description' => $description,
+            'qualification' => $qualification,
+            'start_program' => $start_program,
+            'end_program' => $end_program,
+        ]);
+
+        return $this->getResponse('Program berhasil diupdate');
+    }
+
     public function deleteProgram($id)
     {
         $program = new ModelsProgram();
