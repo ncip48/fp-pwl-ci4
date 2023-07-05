@@ -54,10 +54,10 @@ class Auth extends BaseController
                             } else {
                                 $url = $previous_season_url;
                             }
-                        } elseif ($user['role'] == 99) {
-                            $url = '/admin';
+                        } elseif ($user['role'] == 2) {
+                            $url = '/pengelola/dashboard';
                         } else {
-                            $url = '/pengelola';
+                            $url = '/admin/dashboard';
                         }
 
                         $data = [

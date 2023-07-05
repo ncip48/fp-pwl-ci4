@@ -71,11 +71,16 @@ class Kegiatan extends BaseController
         $program['start_program'] = $this->formatDateIndo($program['start_program']);
         $program['end_program'] = $this->formatDateIndo($program['end_program']);
         $program['files'] = $template->select('id,name,pdf,html')->where('id_program', $id)->findAll();
+        // dd($program);
         //find document in the files if exist then create colummn result else null
+        // dd($document->where('id_kegiatan', $id)->where('id_template', 7)->first());
         foreach ($program['files'] as $key => $value) {
-            $document = $document->where('id_template', $value['id'])->first();
-            if ($document) {
-                $program['files'][$key]['result'] = $document['pdf'];
+            $doc = $document->where('id_kegiatan', $id)->where('id_template', $value['id'])->first();
+            // dd($document);
+            // dd($document->getFirstRow());
+            // dd($value['id']);
+            if ($doc) {
+                $program['files'][$key]['result'] = $doc['pdf'];
             } else {
                 $program['files'][$key]['result'] = null;
             }

@@ -85,6 +85,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-8 my-2">
+                                <div id="temporary" class="d-none"></div>
                                 <div class="pdf" id="printable">
 
                                 </div>
@@ -94,7 +95,7 @@
 
                                 </div>
                                 <input id="id_template" type="hidden" />
-                                <button id="tutupdokumen" class="btn btn-primary w-100 mt-2 fw-bold" data-bs-toggle="modal" data-bs-target="#modalKonfirmasi">Submit Dokumen</button>
+                                <button id="tutupdokumen" class="btn btn-primary w-100 mt-2 fw-bold">Submit Dokumen</button>
                                 <div class="d-flex flex-column mt-3">
                                     <small class="text-danger">*Pastikan dokumen yang diisi sudah benar</small>
                                     <small class="text-danger">*Dokumen yang sudah diisi tidak dapat diubah</small>
@@ -115,6 +116,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div id="temporary-pdf" class="d-none"></div>
                     <div class="pdf">
 
                     </div>
@@ -157,7 +159,7 @@
                     <div id="btn-message" class="m-0 w-100">
                         <div class="d-flex">
                             <div class="d-grid gap-2 w-100"><button type="button" class="btn btn-primary fw-bold border-0" id="savepdf">YA</button></div>
-                            <div class="d-grid gap-2 w-100"><button type="button" class="btn btn-danger fw-bold border-0" data-bs-dismiss="modal">TIDAK</button></div>
+                            <div class="d-grid gap-2 w-100"><button type="button" class="btn btn-danger fw-bold border-0" data-bs-dismiss="modal" id="cancelpdf">TIDAK</button></div>
                         </div>
                     </div>
                 </div>
@@ -234,14 +236,31 @@
                             fileHtml.append(`<div class="d-flex align-items-center justify-content-between"><div class="d-flex align-items-center text-dark">
                             <i class="bi bi-file-earmark-pdf-fill me-2" style="position:relative"></i> <span class="fw-bold fs-6">${item.name}</span>
                         </div>
-                        <a id="lihat-dokumen" class="btn btn-sm btn-outline-dark fw-bold ${item.result !== null ? "d-block" : "d-none"} lihat-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-title="${item.name}" data-pdf="${item.result}" data-id="${item.id}">Lihat</a>
-                        <a id="isi-dokumen" class="btn btn-sm btn-outline-dark fw-bold ${item.result === null ? "d-block" : "d-none"} isi-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen ${item.name}" data-id="${item.id}">Isi Dokumen</a>
+                        <a id="lihat-dokumen" class="btn btn-sm btn-outline-dark fw-bold mb-2 ${item.result !== null ? "d-block" : "d-none"} lihat-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-title="${item.name}" data-pdf="${item.result}" data-id="${item.id}">Lihat</a>
+                        <a id="isi-dokumen" class="btn btn-sm btn-outline-dark fw-bold mb-2 ${item.result === null ? "d-block" : "d-none"} isi-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen ${item.name}" data-id="${item.id}">Isi Dokumen</a>
                         </div>`)
                             if (item.result !== null) {
                                 //append in modal staticbackdrop2 with class pdf
-                                $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
+                                // $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
+                                //append all pdf to temporary-pdf
+                                $('#temporary-pdf').append(
+                                    `<div id="pdf-${item.id}"><object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object></div>`
+                                )
                             }
-                            $('#printable').html(item.html)
+                            console.log(item.html)
+                            //append all item.html to printable id 
+                            $('#printable').html(item.html);
+                            // $('#printable').html(item.html)
+
+                            $('#temporary').append(
+                                '<div id="printable-' + item.id + '">' + item.html + '</div>'
+                            )
+
+                            //set #page-container each printable-id to relative position
+                            $('#printable-' + item.id + ' #page-container').css({
+                                position: 'relative'
+                            })
+
                         })
                     }
                 },
@@ -259,6 +278,8 @@
             })
         }
         const getKegiatan = () => {
+            //empty inpu-form
+            $('.input-form').empty()
             $('.spinner-category').removeClass('d-none')
             $('.content-category').addClass('d-none')
             $('.list-kegiatan').empty()
@@ -373,10 +394,16 @@
         $('#tutupdokumen').on('click', function() {
             //hide modal staticBackdrop
             $('#staticBackdrop').modal('hide')
+            $('#modalKonfirmasi').modal('show')
         })
 
         //detect modalKonfirmasi close
-        $('#modalKonfirmasi').on('hidden.bs.modal', function(event) {
+        // $('#modalKonfirmasi').on('hidden.bs.modal', function(event) {
+        //     $('#staticBackdrop').modal('show')
+        // })
+
+        $('#cancelpdf').on('click', function() {
+            $('#modalKonfirmasi').modal('hide')
             $('#staticBackdrop').modal('show')
         })
 
@@ -389,6 +416,8 @@
             printContent = printContent.replace('class="page w0 h0"', 'class="page w0 h0" style="margin:0;"');
             printContent = printContent.replace('position: absolute;', 'position: relative;');
             //find class page then add style margin:0
+            console.log(printContent)
+            // return;
 
             //check if all input is empty then alert
             var input = $('.input-form');
@@ -502,8 +531,22 @@
         })
     });
 
+    $(document).on('click', '#lihat-dokumen', function() {
+        var id = $(this).data('id')
+        //find the temporary-pdf in id named staticBackdrop2
+        var pdf = $('#staticBackdrop2').find('#pdf-' + id);
+        // console.log(pdf)
+        //append to staticBackdrop2 with pdf class
+        $('#staticBackdrop2').find('.pdf').html(pdf);
+    })
+
     $(document).on('click', '#isi-dokumen', function() {
         $('#id_template_popup').val($(this).data('id'))
+        // var html = $(this).data('html')
+        var id = $(this).data('id')
+        //match the id with #printable-id
+        var html = $('#printable-' + id).html();
+        $('#printable').html(html);
         //get the id page-container
         var page = $('#page-container');
         //change position to relative
@@ -525,6 +568,8 @@
         //set the pdf with the new content
         pdf.html(pdfContent);
 
+        //empty the input
+        $('.input-form').empty();
         //get the input
         var input = $('.input-form');
         //loop through the input

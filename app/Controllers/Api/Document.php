@@ -4,49 +4,43 @@ namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
 use App\Models\Document as ModelsDocument;
+use CURLFile;
 
 class Document extends BaseController
 {
-    private $key;
     private $uname;
     private $pass;
 
     public function __construct()
     {
-        $this->key = env('api.key.pdf.co');
         $this->uname = env('api.uname.pdfcrowd');
         $this->pass = env('api.key.pdfcrowd');
     }
 
     public function submit()
     {
-        $url = "https://api.pdfcrowd.com/convert/20.10/";
-
-        $html = $this->request->getPost('html');
-
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_USERPWD, $this->uname . ":" . $this->pass);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, [
-            'text' => $html,
-            'no_margins' => true,
-            'viewport_width' => 800,
-            'rendering_mode' => 'viewport',
-            'smart_scaling_mode' => 'viewport-fit',
-        ]);
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        //save response to file
+        $html = $this->request->getVar('html');
         $name = rand(1000000000, 9999999999) . '.pdf';
-        $file = fopen(ROOTPATH . 'public/file/output/' . $name, 'w');
-        fwrite($file, $response);
+        try {
+            // create the API client instance
+            $client = new \Pdfcrowd\HtmlToPdfClient($this->uname, $this->pass);
+
+            // run the conversion and write the result to a file
+            $client->convertStringToFile(
+                $html,
+                ROOTPATH . 'public/file/output/' . $name
+            );
+        } catch (\Pdfcrowd\Error $why) {
+            // report the error
+            error_log("Pdfcrowd Error: {$why}\n");
+
+            // rethrow or handle the exception
+            throw $why;
+        }
 
         $session = \Config\Services::session();
         $id_user = $session->get('user')['id'];
+        // dd($session->get('user'));
         $id_template = $this->request->getPost('id_template');
         $id_kegiatan = $this->request->getPost('id_kegiatan');
         $status = 0;
