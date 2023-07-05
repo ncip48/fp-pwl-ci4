@@ -75,10 +75,8 @@
                                             <td><?= $row['duration'] ?></td>
 
                                             <td>
-                                                <a href="<?= base_url('pengelola/program?id=') . $row['id'] ?>" class="btn btn-warning btn-sm"><i class="mdi mdi-pencil"></i> Edit</a>
-                                                <form id="hapus-program-<?= $row['id'] ?>" action="<?= base_url('pengelola/program/') . $row['id'] ?>" hidden>
-                                                </form>
-                                                <a onclick="event.preventDefault(); document.getElementById('hapus-program-<?= $row['id'] ?>').submit();" class="btn btn-danger btn-sm"><i class="mdi mdi-delete"></i> Hapus</a>
+                                                <a href="<?= base_url('pengelola/program/') . $row['id'] ?>" class="btn btn-warning btn-sm"><i class="mdi mdi-pencil"></i> Edit</a>
+                                                <a class="btn btn-danger btn-sm" id="delete-form" data-id="<?= $row['id'] ?>"><i class="mdi mdi-delete"></i> Hapus</a>
                                             </td>
 
                                         </tr>
@@ -99,5 +97,47 @@
     <!-- ============================================================= -->
     <!-- ============================================================= -->
 
+
+    <?= $this->endSection() ?>
+
+    <?= $this->section('customScripts') ?>
+
+    <script>
+        $(document).ready(function() {
+
+            $('#datatables').on('click', '#delete-form', function() {
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "<?= base_url('api/program/') ?>" + id,
+                            type: "DELETE",
+                            success: function() {
+                                Swal.fire(
+                                    'Terhapus!',
+                                    'Data berhasil dihapus.',
+                                    'success'
+                                ).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                })
+                            }
+                        });
+                    }
+                })
+            });
+        });
+    </script>
 
     <?= $this->endSection() ?>
