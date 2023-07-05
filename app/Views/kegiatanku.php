@@ -241,7 +241,10 @@
                                 //append in modal staticbackdrop2 with class pdf
                                 $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
                             }
-                            $('#printable').html(item.html)
+                            console.log(item.html)
+                            //append all item.html to printable id 
+                            $('#printable').html(item.html);
+                            // $('#printable').html(item.html)
                         })
                     }
                 },
@@ -259,6 +262,8 @@
             })
         }
         const getKegiatan = () => {
+            //empty inpu-form
+            $('.input-form').empty()
             $('.spinner-category').removeClass('d-none')
             $('.content-category').addClass('d-none')
             $('.list-kegiatan').empty()
@@ -395,6 +400,8 @@
             printContent = printContent.replace('class="page w0 h0"', 'class="page w0 h0" style="margin:0;"');
             printContent = printContent.replace('position: absolute;', 'position: relative;');
             //find class page then add style margin:0
+            console.log(printContent)
+            // return;
 
             //check if all input is empty then alert
             var input = $('.input-form');
@@ -407,7 +414,7 @@
             }
             if (empty > 0) {
                 alert('Harap isi semua input');
-                return;
+                // return;
             }
 
             var id_template = $('#id_template_popup').val();
@@ -531,6 +538,8 @@
         //set the pdf with the new content
         pdf.html(pdfContent);
 
+        //empty the input
+        $('.input-form').empty();
         //get the input
         var input = $('.input-form');
         //loop through the input
