@@ -430,7 +430,7 @@
             }
             if (empty > 0) {
                 alert('Harap isi semua input');
-                // return;
+                return;
             }
 
             var id_template = $('#id_template_popup').val();
