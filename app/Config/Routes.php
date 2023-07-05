@@ -63,6 +63,7 @@ $routes->group('api', static function ($routes) {
     $routes->get('kegiatanku', 'Api\Kegiatan::kgetiatanku');
     $routes->get('kegiatan/(:any)', 'Api\Kegiatan::detail/$1');
     $routes->post('submit-dokumen', 'Api\Document::submit');
+    $routes->delete('program/(:any)', 'Api\Program::deleteProgram/$1');
 });
 
 $routes->group('pengelola', static function ($routes) {

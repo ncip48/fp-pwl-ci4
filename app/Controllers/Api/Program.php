@@ -117,4 +117,18 @@ class Program extends BaseController
         ];
         return $this->getResponse('Pendaftaran berhasil, silahkan lengkapi dokumen yang dibutuhkan di bagian kegiatanku', $data);
     }
+
+    public function deleteProgram($id)
+    {
+        $program = new ModelsProgram();
+        $program = $program->where('id', $id)->first();
+        // dd($program);
+        if (!$program) {
+            return $this->getResponse('Program tidak ditemukan', [], 404);
+        }
+        $program = new ModelsProgram();
+        $program = $program->where('id', $id)->delete();
+
+        return $this->getResponse('Program berhasil dihapus');
+    }
 }

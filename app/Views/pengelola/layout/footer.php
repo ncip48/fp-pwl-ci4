@@ -34,6 +34,7 @@
 <script src="<?= base_url('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') ?>"></script>
 <script src="<?= base_url('assets/dist/js/pages/dashboards/dashboard1.js') ?>"></script>
 <script src="<?= base_url('assets/dist/js/feather.min.js') ?>"></script>
+<script src="<?= base_url('assets/dist/js/sweetalert.min.js') ?>"></script>
 <script>
     $(document).ready(function() {
         $('#datatables').DataTable({
@@ -58,6 +59,7 @@
         });
     });
 </script>
+<?= $this->renderSection('customScripts') ?>
 <script>
     feather.replace()
 </script>
