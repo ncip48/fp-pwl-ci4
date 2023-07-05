@@ -85,6 +85,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-8 my-2">
+                                <div id="temporary" class="d-none"></div>
                                 <div class="pdf" id="printable">
 
                                 </div>
@@ -115,6 +116,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div id="temporary-pdf" class="d-none"></div>
                     <div class="pdf">
 
                     </div>
@@ -234,17 +236,31 @@
                             fileHtml.append(`<div class="d-flex align-items-center justify-content-between"><div class="d-flex align-items-center text-dark">
                             <i class="bi bi-file-earmark-pdf-fill me-2" style="position:relative"></i> <span class="fw-bold fs-6">${item.name}</span>
                         </div>
-                        <a id="lihat-dokumen" class="btn btn-sm btn-outline-dark fw-bold ${item.result !== null ? "d-block" : "d-none"} lihat-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-title="${item.name}" data-pdf="${item.result}" data-id="${item.id}">Lihat</a>
-                        <a id="isi-dokumen" class="btn btn-sm btn-outline-dark fw-bold ${item.result === null ? "d-block" : "d-none"} isi-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen ${item.name}" data-id="${item.id}">Isi Dokumen</a>
+                        <a id="lihat-dokumen" class="btn btn-sm btn-outline-dark fw-bold mb-2 ${item.result !== null ? "d-block" : "d-none"} lihat-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-title="${item.name}" data-pdf="${item.result}" data-id="${item.id}">Lihat</a>
+                        <a id="isi-dokumen" class="btn btn-sm btn-outline-dark fw-bold mb-2 ${item.result === null ? "d-block" : "d-none"} isi-${item.id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-title="Lengkapi Dokumen ${item.name}" data-id="${item.id}">Isi Dokumen</a>
                         </div>`)
                             if (item.result !== null) {
                                 //append in modal staticbackdrop2 with class pdf
-                                $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
+                                // $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
+                                //append all pdf to temporary-pdf
+                                $('#temporary-pdf').append(
+                                    `<div id="pdf-${item.id}"><object type="application/pdf" data="<?= base_url('file/output/') ?>${item.result}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object></div>`
+                                )
                             }
                             console.log(item.html)
                             //append all item.html to printable id 
                             $('#printable').html(item.html);
                             // $('#printable').html(item.html)
+
+                            $('#temporary').append(
+                                '<div id="printable-' + item.id + '">' + item.html + '</div>'
+                            )
+
+                            //set #page-container each printable-id to relative position
+                            $('#printable-' + item.id + ' #page-container').css({
+                                position: 'relative'
+                            })
+
                         })
                     }
                 },
@@ -515,8 +531,22 @@
         })
     });
 
+    $(document).on('click', '#lihat-dokumen', function() {
+        var id = $(this).data('id')
+        //find the temporary-pdf in id named staticBackdrop2
+        var pdf = $('#staticBackdrop2').find('#pdf-' + id);
+        // console.log(pdf)
+        //append to staticBackdrop2 with pdf class
+        $('#staticBackdrop2').find('.pdf').html(pdf);
+    })
+
     $(document).on('click', '#isi-dokumen', function() {
         $('#id_template_popup').val($(this).data('id'))
+        // var html = $(this).data('html')
+        var id = $(this).data('id')
+        //match the id with #printable-id
+        var html = $('#printable-' + id).html();
+        $('#printable').html(html);
         //get the id page-container
         var page = $('#page-container');
         //change position to relative

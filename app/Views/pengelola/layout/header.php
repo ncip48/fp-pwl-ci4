@@ -57,7 +57,7 @@ $user = $session->get('user');
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="<?= base_url('admin/home') ?>">
+                    <a class="navbar-brand" href="<?= base_url('pengelola/dashboard') ?>">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->

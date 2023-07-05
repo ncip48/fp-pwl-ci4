@@ -26,6 +26,7 @@ class Pdf extends BaseController
     {
         $file = $this->request->getFile('file');
         $name = $this->request->getPost('name');
+        $id_program = $this->request->getPost('id_program');
         if (!$file->isValid()) {
             return $this->getResponse('File tidak valid', [], 400);
         }
@@ -40,6 +41,7 @@ class Pdf extends BaseController
             'name' => $name,
             'pdf' => $pdf,
             'link' => base_url('file/pdf/' . $pdf),
+            'id_program' => $id_program,
         ];
         $this->newConvert($data, $rootPath);
         return $this->getResponse('Sukses upload pdf', $data);
@@ -47,28 +49,14 @@ class Pdf extends BaseController
 
     public function newConvert($data, $file)
     {
-        $url = "https://api.pdfcrowd.com/convert/20.10/";
+        // create the API client instance
+        $client = new \Pdfcrowd\PdfToHtmlClient($this->uname, $this->pass);
 
-        $body = array(
-            'input_format' => 'pdf',
-            'output_format' => 'html',
-            'file' => new CURLFile($file)
-        );
-
-        //curl with Basic Authentication
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_USERPWD, $this->uname . ":" . $this->pass);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
-
-        $html = curl_exec($curl);
-
-        curl_close($curl);
+        // run the conversion and write the result to a file
+        $html = $client->convertFile($file);
 
         $data = [
-            'id_program' => 1,
+            'id_program' => $data['id_program'],
             'name' => $data['name'],
             'pdf' => $data['pdf'],
             'html' => $html,
