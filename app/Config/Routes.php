@@ -41,6 +41,7 @@ $routes->get('/mahasiswa/dashboard', 'Dashboard::index', ['filter' => 'authGuard
 $routes->get('/signature', 'Signature::index');
 $routes->get('/verify/(:any)', 'Signature::verify/$1');
 $routes->get('/pdf', 'Pdf::index');
+$routes->get('/akun', 'Akun::index');
 $routes->get('/logout', 'Auth::logout');
 
 //experimental

@@ -294,3 +294,11 @@ h6 {
 .border-0 {
   border-radius: 0px !important;
 }
+
+.container-profil{
+  min-height: 700px;
+}
+
+.container-detail-profile{
+  min-height: 700px;
+}
