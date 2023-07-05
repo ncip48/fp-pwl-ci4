@@ -682,6 +682,7 @@ $user = $session->get('user');
                     <ul id="sidebarnav">
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?= base_url('pengelola/dashboard') ?>" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?= base_url('pengelola/program') ?>" aria-expanded="false"><i class="mdi mdi-beaker"></i><span class="hide-menu">Program</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?= base_url('pengelola/document') ?>" aria-expanded="false"><i class="mdi mdi-file-document"></i><span class="hide-menu">Dokumen</span></a></li>
                     </ul>
 
                 </nav>
