@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'nik' => '1234567892',
-                'name' => 'Ahmad',
-                'email' => 'ahmad@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'password' => password_hash('password', PASSWORD_DEFAULT),
                 'role' => '3',
                 'created_at' => date('Y-m-d H:i:s'),

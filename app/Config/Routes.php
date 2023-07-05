@@ -64,6 +64,12 @@ $routes->group('api', static function ($routes) {
     $routes->post('submit-dokumen', 'Api\Document::submit');
 });
 
+$routes->group('pengelola', static function ($routes) {
+    $routes->get('dashboard', 'Pengelola\Dashboard::index', ['filter' => 'authGuard']);
+    $routes->get('program', 'Pengelola\Program::index', ['filter' => 'authGuard']);
+    $routes->get('program/(:any)', 'Pengelola\Program::detail/$1', ['filter' => 'authGuard']);
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
