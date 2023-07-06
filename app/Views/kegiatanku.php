@@ -183,6 +183,11 @@
             $('.card-files').addClass('d-none')
             $('.card-content').addClass('h-100')
             detail_program.empty()
+            //empty temporary pdf
+            $('#temporary-pdf').empty()
+            //empty pdf
+            $('#temporary').empty()
+            $('.pdf').empty()
             $.ajax({
                 type: 'GET',
                 url,
