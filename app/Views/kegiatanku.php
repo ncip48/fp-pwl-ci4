@@ -457,7 +457,12 @@
                     //find data-id-${id_template} in id named id_kegiatan a href then change display to none
                     $(`.isi-${id_template}`).removeClass('d-block')
                     $(`.isi-${id_template}`).addClass('d-none')
-                    $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${result.data.pdf}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
+                    //find .lihat-dokumen where have data with id=id_template then change data-pdf to 'api/download-pdf/' + result
+                    $(`.lihat-${id_template}`).attr('data-pdf', `${result.data.pdf}`)
+                    $('#temporary-pdf').append(
+                        `<div id="pdf-${id_template}"><object type="application/pdf" data="<?= base_url('file/output/') ?>${result.data.pdf}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object></div>`
+                    )
+                    // $('#staticBackdrop2').find('.pdf').html(`<object type="application/pdf" data="<?= base_url('file/output/') ?>${result.data.pdf}#toolbar=0" width="100%" height="100%" style="height: 100vh;">No Support</object>`)
                 }
             });
             console.log(printContent)
