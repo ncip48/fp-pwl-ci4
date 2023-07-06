@@ -8,8 +8,8 @@
             <div class="d-flex justify-content-start p-2 bg-light">
                 <div class="img p-2">
                     <img src="https://via.placeholder.com/70" class="rounded-circle" alt="...">
+                    <!-- <img src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg" class="rounded-circle" alt="..."> -->
                 </div>
-                <!-- <img src="https://via.placeholder.com/70" class="rounded-circle" alt="..."> -->
                 <div class="mt-3 mb-0 ms-3 col-8">
                     <p class="text-start mb-0">Herly Chahya</p>
                     <p class="text-start">21.01.4556</p>
@@ -17,11 +17,11 @@
             </div>
             <div class="list-group container-profil">
                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                    Profil
+                <i class="bi bi-person-fill"></i> Profil
                 </a>
                 <!-- <a href="#" class="list-group-item list-group-item-action">Ubah Profil</a> -->
-                <a href="#editPassword" class="list-group-item list-group-item-action">Ubah Password</a>
-                <a href="#changePhotoProfile" class="list-group-item list-group-item-action">Ubah Foto</a>
+                <a href="#editPassword" class="list-group-item list-group-item-action"><i class="bi bi-key-fill"></i> Ubah Password</a>
+                <a href="#changePhotoProfile" class="list-group-item list-group-item-action"><i class="bi bi-camera-fill"></i> Ubah Foto</a>
             </div>
         </div>
         <div class="col-12 col-lg-8 container-detail-profil bg-light rounded">
@@ -65,6 +65,7 @@
     </div>
 </div>
 
+<!-- edit menu  -->
 <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content rounded-4 shadow">
@@ -189,7 +190,7 @@
             modal.find('.modal-title').text('Edit ' + recipient)
         })
     })
-    
+
     $(document).ready(function() {
         $('#changePhotoProfile').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
