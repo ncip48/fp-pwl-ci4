@@ -17,7 +17,7 @@
             </div>
             <div class="list-group container-profil">
                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                <i class="bi bi-person-fill"></i> Profil
+                    <i class="bi bi-person-fill"></i> Profil
                 </a>
                 <!-- <a href="#" class="list-group-item list-group-item-action">Ubah Profil</a> -->
                 <a href="#editPassword" class="list-group-item list-group-item-action"><i class="bi bi-key-fill"></i> Ubah Password</a>
@@ -126,15 +126,15 @@
                 <form action="#" method="post">
                     <div class="mb-3">
                         <label for="password" class="form-label">Password Lama</label>
-                        <input type="password" class="form-control" id="password" name="password" value="Herly Chahya">
+                        <input type="password" class="form-control" id="password" name="password" value="password"> 
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password Baru</label>
-                        <input type="password" class="form-control" id="password" name="password" value="Herly Chahya">
+                        <input type="password" class="form-control" id="password" name="password" value="password">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Konfirmasi Password Baru</label>
-                        <input type="password" class="form-control" id="password" name="password" value="Herly Chahya">
+                        <input type="password" class="form-control" id="password" name="password" value="password">
                     </div>
                 </form>
             </div>
@@ -174,30 +174,25 @@
 <?= $this->section('customScripts') ?>
 <script>
     $(document).ready(function() {
-        $('#editProfile').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var recipient = button.data('whatever')
-            var modal = $(this)
-            modal.find('.modal-title').text('Edit ' + recipient)
-        })
-    })
-
+        $('.list-group-item').click(function() {
+            if ($(this).attr('href') === '#editProfile') {
+                $('#editProfile').modal('show');
+            }
+        });
+    });
     $(document).ready(function() {
-        $('#editPassword').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var recipient = button.data('whatever')
-            var modal = $(this)
-            modal.find('.modal-title').text('Edit ' + recipient)
-        })
-    })
-
+        $('.list-group-item').click(function() {
+            if ($(this).attr('href') === '#changePhotoProfile') {
+                $('#changePhotoProfile').modal('show');
+            }
+        });
+    });
     $(document).ready(function() {
-        $('#changePhotoProfile').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var recipient = button.data('whatever')
-            var modal = $(this)
-            modal.find('.modal-title').text('Edit ' + recipient)
-        })
-    })
+        $('.list-group-item').click(function() {
+            if ($(this).attr('href') === '#editPassword') {
+                $('#editPassword').modal('show');
+            }
+        });
+    });
 </script>
 <?= $this->endSection(); ?>
