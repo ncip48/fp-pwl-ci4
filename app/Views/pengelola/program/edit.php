@@ -124,7 +124,7 @@
                                     <label>
                                         <span class="border-info">Dokumen</span>
                                     </label>
-                                    <span class="fw-bold cursor-pointer" id="add-document">Tambahkan Dokumen</span>
+                                    <span class="fw-bold cursor-pointer" id="add-document" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambahkan Dokumen</span>
                                 </div>
                                 <div id="dokumen">
                                 </div>
@@ -139,7 +139,7 @@
                                             Gak Jadi
                                         </div>
                                     </a>
-                                    <button type="submit" class="btn btn-info font-weight-medium rounded-pill px-4 ">
+                                    <button type="submit" class="btn btn-info font-weight-medium rounded-pill px-4 " id="submit-form">
                                         <div class="d-flex align-items-center">
                                             <i data-feather="send" class="feather feather-save feather-sm text-white fill-white me-2"></i>
                                             Simpan
@@ -161,6 +161,42 @@
     <!-- End Container fluid  -->
     <!-- ============================================================= -->
     <!-- ============================================================= -->
+
+    <!-- modal #staticBackdrop -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fs-6 fw-bold" id="staticBackdropLabel">Tambah Dokumen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="add-document-form" id="add-document-form" action="<?= base_url('api/template') ?>" method="POST" autocomplete="off">
+                        <input type="hidden" name="id_program" value="<?= $program['id'] ?>">
+                        <div class="form-group mb-3 form-modal">
+                            <label>
+                                <span class="border-info">Nama Dokumen</span>
+                            </label>
+                            <input type="text" class="form-control border border-primary" name="name" placeholder="Nama Dokumen" id="name">
+                            <span class="invalid-feedback d-block" role="alert">
+                            </span>
+                        </div>
+                        <div class="form-group mb-3 form-modal">
+                            <label>
+                                <span class="border-info">File Template PDF</span>
+                            </label>
+                            <input type="file" class="form-control border border-primary" name="file" id="file">
+                            <span class="invalid-feedback d-block" role="alert">
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-info rounded-pill px-4" id="add-document-btn">Tambahkan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <?= $this->endSection() ?>
@@ -231,13 +267,20 @@
                     contentType: false,
                     processData: false,
                     beforeSend: function() {
-                        $(document).find('span.invalid-feedback').remove();
-                        $(document).find('.is-invalid').removeClass('is-invalid');
+                        // $(document).find('span.invalid-feedback').remove();
+                        // $(document).find('.is-invalid').removeClass('is-invalid');
+                        $('#submit-form').html('<div class="spinner-border spinner-border-sm text-white" role="status"><span class="visually-hidden">Loading...</span></div>');
+                        $('#submit-form').attr('disabled', true);
                     },
                     success: function(res) {
+                        $('#submit-form').html('<i data-feather="send" class="feather feather-save feather-sm text-white fill-white me-2"></i>Simpan');
+                        $('#submit-form').attr('disabled', false);
                         if (res.error) {
                             $.each(res.error, function(key, value) {
                                 $('#' + key).addClass('is-invalid');
+                                //remove border primary and border
+                                $('#' + key).removeClass('border');
+                                $('#' + key).removeClass('border-primary');
                                 $('#' + key).closest('.form-group').find('.invalid-feedback').html(value);
                             });
                         } else {
@@ -248,7 +291,63 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(function() {
-                                window.location.href = "<?= base_url('pengelola/program') ?>";
+                                // window.location.href = "<?= base_url('pengelola/program') ?>";
+                            })
+                        }
+                    }
+                })
+            })
+
+            $('#add-document-btn').on('click', function(e) {
+                e.preventDefault();
+
+                const form = $('#add-document-form')[0];
+
+                $.ajax({
+                    url: $(form).attr('action'),
+                    type: $(form).attr('method'),
+                    //input form data
+                    data: new FormData(form),
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        // $(document).find('span.invalid-feedback').remove();
+                        // $(document).find('.is-invalid').removeClass('is-invalid');
+                        //add spinner in button
+                        $('#add-document-btn').html('<div class="spinner-border spinner-border-sm text-light" role="status"><span class="visually-hidden">Loading...</span></div>');
+                        //disable
+                        $('#add-document-btn').attr('disabled', true);
+                    },
+                    success: function(res) {
+                        //remove spinner
+                        $('#add-document-btn').html('Tambahkan');
+                        //enable
+                        $('#add-document-btn').attr('disabled', false);
+                        if (res.error != null) {
+                            //add border and border primary for each input
+                            $('#add-document-form').find('input').addClass('border');
+                            $('#add-document-form').find('input').addClass('border-primary');
+                            //remove is-invalid class
+                            $('#add-document-form').find('input').removeClass('is-invalid');
+                            //remove .invalid-feedback
+                            $('#add-document-form').find('.invalid-feedback').html('');
+                            $.each(res.msg, function(key, value) {
+                                $('#' + key).addClass('is-invalid');
+                                //remove border primary and border
+                                $('#' + key).removeClass('border');
+                                $('#' + key).removeClass('border-primary');
+                                $('#' + key).closest('.form-modal').find('.invalid-feedback').html(value);
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: res.success,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function() {
+                                $('#staticBackdrop').modal('hide')
+                                getDocument()
                             })
                         }
                     }

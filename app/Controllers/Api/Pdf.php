@@ -27,6 +27,31 @@ class Pdf extends BaseController
         $file = $this->request->getFile('file');
         $name = $this->request->getPost('name');
         $id_program = $this->request->getPost('id_program');
+
+        //validation each input
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'file' => 'uploaded[file]|mime_in[file,application/pdf]|ext_in[file,pdf]',
+            'name' => 'required',
+            'id_program' => 'required',
+        ], [
+            'file' => [
+                'uploaded' => 'File tidak boleh kosong',
+                'mime_in' => 'File harus berupa pdf',
+                'ext_in' => 'File harus berupa pdf',
+            ],
+            'name' => [
+                'required' => 'Nama tidak boleh kosong',
+            ],
+            'id_program' => [
+                'required' => 'Program tidak boleh kosong',
+            ],
+        ]);
+
+        if (!$validation->run($this->request->getPost())) {
+            return $this->getResponse($validation->getErrors(), [], 200, 'Validasi gagal');
+        }
+
         if (!$file->isValid()) {
             return $this->getResponse('File tidak valid', [], 400);
         }
