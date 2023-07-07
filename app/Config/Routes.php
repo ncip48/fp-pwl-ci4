@@ -64,15 +64,18 @@ $routes->group('api', static function ($routes) {
     $routes->get('kegiatan/(:any)', 'Api\Kegiatan::detail/$1');
     $routes->post('submit-dokumen', 'Api\Document::submit');
     $routes->patch('program', 'Api\Program::updateProgram');
+    $routes->post('program', 'Api\Program::addProgram');
     $routes->delete('program/(:any)', 'Api\Program::deleteProgram/$1');
     $routes->delete('document/(:any)', 'Api\Document::deleteDocument/$1');
     $routes->delete('template/(:any)', 'Api\Document::deleteTemplateDocument/$1');
     $routes->post('template', 'Api\Pdf::upload');
+    $routes->get('program-document/(:any)', 'Api\Program::getDocuments/$1');
 });
 
 $routes->group('pengelola', static function ($routes) {
     $routes->get('dashboard', 'Pengelola\Dashboard::index', ['filter' => 'authGuard']);
     $routes->get('program', 'Pengelola\Program::index', ['filter' => 'authGuard']);
+    $routes->get('create/program', 'Pengelola\Program::create', ['filter' => 'authGuard']);
     $routes->get('program/(:any)', 'Pengelola\Program::edit/$1', ['filter' => 'authGuard']);
 });
 

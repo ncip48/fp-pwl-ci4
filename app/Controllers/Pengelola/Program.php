@@ -22,7 +22,7 @@ class Program extends BaseController
 
     public function create()
     {
-        return view('pengelola/program/create');
+        return view('pengelola/program/add');
     }
 
     public function edit($id)

@@ -15,6 +15,7 @@ class Program extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        'kode_program',
         'category_id',
         'name',
         'organizer',

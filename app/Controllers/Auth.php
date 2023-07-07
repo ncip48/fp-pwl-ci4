@@ -17,6 +17,14 @@ class Auth extends BaseController
         return view('auth', $data);
     }
 
+    public function register()
+    {
+        $data = [
+            'title' => 'Register',
+        ];
+        return view('register', $data);
+    }
+
     public function logout()
     {
         $session = \Config\Services::session();

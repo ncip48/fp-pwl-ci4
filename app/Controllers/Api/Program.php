@@ -68,7 +68,6 @@ class Program extends BaseController
         if (!$program) {
             return $this->getResponse('Program tidak ditemukan', [], 404);
         }
-
         $program['duration'] = $this->calculateDuration($program['start_program'], $program['end_program']);
         //change the start_program and end_program to date format
         $program['start_program'] = $this->formatDateIndo($program['start_program']);
@@ -77,6 +76,29 @@ class Program extends BaseController
 
         $data = [
             'program' => $program,
+        ];
+        return $this->getResponse('Sukses mendapatkan data program', $data);
+    }
+
+    public function getDocuments($id)
+    {
+        $program = new ModelsProgram();
+        $template = new TemplateDocument();
+        // $program = $program->select('programs.*')
+        //     ->select('categories.name as category_name')
+        //     ->join('categories', 'categories.id = programs.category_id')
+        //     ->where('programs.id', $id)
+        //     ->first();
+
+
+        // $program['duration'] = $this->calculateDuration($program['start_program'], $program['end_program']);
+        // //change the start_program and end_program to date format
+        // $program['start_program'] = $this->formatDateIndo($program['start_program']);
+        // $program['end_program'] = $this->formatDateIndo($program['end_program']);
+        $files = $template->select('id,name,pdf,html')->where('id_program', $id)->findAll();
+
+        $data = [
+            'files' => $files,
         ];
         return $this->getResponse('Sukses mendapatkan data program', $data);
     }
@@ -116,6 +138,35 @@ class Program extends BaseController
             'activity' => $activity,
         ];
         return $this->getResponse('Pendaftaran berhasil, silahkan lengkapi dokumen yang dibutuhkan di bagian kegiatanku', $data);
+    }
+
+    public function addProgram()
+    {
+        $id = $this->request->getJsonVar('id');
+        $name = $this->request->getJsonVar('name');
+        $organizer = $this->request->getJsonVar('organizer');
+        $location = $this->request->getJsonVar('location');
+        $slot = $this->request->getJsonVar('slot');
+        $description = $this->request->getJsonVar('description');
+        $qualification = $this->request->getJsonVar('qualification');
+        $start_program = $this->request->getJsonVar('start_program');
+        $end_program = $this->request->getJsonVar('end_program');
+
+        $program = new ModelsProgram();
+        $program = $program->insert([
+            'kode_program' => 'BEA-' . rand(1000, 9999), //generate kode program
+            'name' => $name,
+            'organizer' => $organizer,
+            'location' => $location,
+            'slot' => $slot,
+            'description' => $description,
+            'qualification' => $qualification,
+            'start_program' => $start_program,
+            'end_program' => $end_program,
+            'category_id' => 1,
+        ]);
+
+        return $this->getResponse('Program berhasil dibuat', $program);
     }
 
     public function updateProgram()

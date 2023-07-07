@@ -41,7 +41,7 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="<?= base_url('pengelola/tambah_program') ?>" class="btn btn-info btn-rounded m-t-10 mb-2">
+                            <a href="<?= base_url('pengelola/create/program') ?>" class="btn btn-info btn-rounded m-t-10 mb-2">
                                 <i class="mdi mdi-plus"></i>
                                 Tambah Program
                             </a>

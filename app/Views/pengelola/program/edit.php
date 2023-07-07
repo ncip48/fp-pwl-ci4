@@ -214,7 +214,7 @@
             //ajax to get document by id
             const getDocument = async () => {
                 $.ajax({
-                    url: '<?= base_url('api/program/') ?>' + $('[name="id"]').val(),
+                    url: '<?= base_url('api/program-document/') ?>' + $('[name="id"]').val(),
                     type: 'GET',
                     dataType: 'json',
                     beforeSend: function() {
@@ -225,7 +225,7 @@
                         $('#dokumen').html('')
                         // console.log(res);
                         if (!res.error) {
-                            let files = res.data.program.files
+                            let files = res.data.files
                             //loop files
                             files.map((item, index) => {
 
@@ -291,7 +291,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(function() {
-                                // window.location.href = "<?= base_url('pengelola/program') ?>";
+                                window.location.href = "<?= base_url('pengelola/program') ?>";
                             })
                         }
                     }

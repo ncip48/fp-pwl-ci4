@@ -90,4 +90,66 @@ class Auth extends BaseController
             return $this->getResponse("Error server", null, 500, $error);
         }
     }
+
+    public function register()
+    {
+        try {
+            if ($this->request->getMethod() == 'post') {
+                //get validationRules from model
+                $validation =  \Config\Services::validation();
+                $session = \Config\Services::session();
+                $rules = [
+
+                    'email' => [
+                        'rules' => 'required|valid_email',
+                        'errors' => [
+                            'required' => 'Email harus diisi',
+                            'valid_email' => 'Email tidak valid',
+                        ]
+                    ],
+                    'password' => [
+                        'rules' => 'required|min_length[8]',
+                        'errors' => [
+                            'required' => 'Password harus diisi',
+                            'min_length' => 'Password minimal {param} karakter'
+                        ]
+                    ],
+                ];
+                if (!$this->validate($rules)) {
+                    return $this->getResponse("Error validasi", null, 403, $validation->getErrors());
+                }
+                $user = new User();
+                $user->insert([
+                    'nik' => $this->request->getPost('nik'),
+                    'name' => $this->request->getPost('name'),
+                    'email' => $this->request->getPost('email'),
+                    'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+                    'role' => 1,
+                ]);
+                $session_user = [
+                    'id' => $user['id'],
+                    'nik' => $user['nik'],
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'role' => $user['role'],
+                ];
+                $session->set('user', $session_user);
+                $session->set('logged_in', TRUE);
+                $user = $user->where('email', $this->request->getPost('email'))->first();
+                $data = [
+                    'redirect' => '/',
+                    'user' => $user,
+                ];
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            $error = $th->getMessage();
+            if (strpos($error, 'Unable to connect to the database.') !== false) {
+                $error = 'Unable to connect to the database.';
+            } else {
+                $error = 'Error server';
+            }
+            return $this->getResponse("Error server", null, 500, $error);
+        }
+    }
 }
