@@ -65,6 +65,8 @@ $routes->group('api', static function ($routes) {
     $routes->post('submit-dokumen', 'Api\Document::submit');
     $routes->patch('program', 'Api\Program::updateProgram');
     $routes->delete('program/(:any)', 'Api\Program::deleteProgram/$1');
+    $routes->delete('document/(:any)', 'Api\Document::deleteDocument/$1');
+    $routes->delete('template/(:any)', 'Api\Document::deleteTemplateDocument/$1');
 });
 
 $routes->group('pengelola', static function ($routes) {

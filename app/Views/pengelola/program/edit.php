@@ -91,7 +91,7 @@
                                 <label>
                                     <span class="border-info">Deskripsi</span>
                                 </label>
-                                <textarea type="text" class="form-control border border-info" name="description" placeholder="Deskripsi" rows="5"><?= $program['description'] ?></textarea>
+                                <textarea class="form-control border border-info" id="description" name="description" placeholder="Deskripsi" rows="5"><?= $program['description'] ?></textarea>
                                 <span class="invalid-feedback d-block" role="alert">
                                 </span>
                             </div>
@@ -119,11 +119,21 @@
                                 <span class="invalid-feedback d-block" role="alert">
                                 </span>
                             </div>
+                            <div class="form-group mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label>
+                                        <span class="border-info">Dokumen</span>
+                                    </label>
+                                    <span class="fw-bold cursor-pointer" id="add-document">Tambahkan Dokumen</span>
+                                </div>
+                                <div id="dokumen">
+                                </div>
+                            </div>
 
 
                             <div class="d-md-flex align-items-center justify-content-end">
                                 <div class="mt-3 mt-md-0 ms-auto">
-                                    <a href="<?= base_url('admin/matkul') ?>" class="btn btn-danger font-weight-medium rounded-pill px-4 ">
+                                    <a href="<?= base_url('pengelola/program') ?>" class="btn btn-danger font-weight-medium rounded-pill px-4 ">
                                         <div class="d-flex align-items-center">
                                             <i data-feather="x-circle" class="feather feather-save feather-sm text-white fill-white me-2"></i>
                                             Gak Jadi
@@ -165,7 +175,40 @@
             });
 
         $(document).ready(function() {
-            //ajax to post form
+            //ajax to get document by id
+            const getDocument = async () => {
+                $.ajax({
+                    url: '<?= base_url('api/program/') ?>' + $('[name="id"]').val(),
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('#dokumen').html('<div class="d-flex justify-content-center my-3"><div class="spinner-border text-info" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+                    },
+                    success: function(res) {
+                        //remove spinner
+                        $('#dokumen').html('')
+                        // console.log(res);
+                        if (!res.error) {
+                            let files = res.data.program.files
+                            //loop files
+                            files.map((item, index) => {
+
+                                //append to #dokumen
+                                const html = `<div class="d-flex align-items-center"><a class="cursor-pointer d-flex align-items-center cursor-pointer text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-pdf='${item.pdf}' data-title='${item.name}'>
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i> <span class="fw-bold fs-6">${item.name}</span>
+                        </a><i class="ms-2 bi bi-x-lg text-danger cursor-pointer" data-id="${item.id}" id="remove-document"></i></div>`
+
+                                $('#dokumen').append(html)
+
+                            })
+                        }
+                    },
+
+                })
+            }
+
+            getDocument()
+
             $('#form').on('submit', function(e) {
                 e.preventDefault();
 
@@ -179,7 +222,7 @@
                         organizer: $('[name="organizer"]').val(),
                         location: $('[name="location"]').val(),
                         slot: $('[name="slot"]').val(),
-                        description: $('[name="description"]').val(),
+                        description: $('#description').val(),
                         qualification: $('[name="qualification"]').val(),
                         start_program: $('[name="start_program"]').val(),
                         end_program: $('[name="end_program"]').val(),
@@ -208,6 +251,44 @@
                                 window.location.href = "<?= base_url('pengelola/program') ?>";
                             })
                         }
+                    }
+                })
+            })
+
+            $(document).on('click', '#remove-document', function() {
+                const id = $(this).data('id')
+                const el = $(this)
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Dokumen akan dihapus dari program ini",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '<?= base_url('api/template/') ?>' + id,
+                            type: 'DELETE',
+                            dataType: 'json',
+                            success: function(res) {
+                                if (!res.error) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: res.success,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(function() {
+                                        el.closest('.d-flex').remove()
+                                        getDocument()
+                                    })
+                                }
+                            }
+                        })
                     }
                 })
             })
