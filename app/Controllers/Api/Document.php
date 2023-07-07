@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
 use App\Models\Document as ModelsDocument;
+use App\Models\TemplateDocument;
 use CURLFile;
 
 class Document extends BaseController
@@ -61,5 +62,24 @@ class Document extends BaseController
         ];
 
         return $this->getResponse('Berhasil menyimpan dokumen', $data);
+    }
+
+    public function deleteDocument($id)
+    {
+        $document = new ModelsDocument();
+        $document = $document->find($id);
+        unlink(ROOTPATH . 'public/file/output/' . $document['pdf']);
+        $document->delete($id);
+        return $this->getResponse('Berhasil menghapus dokumen');
+    }
+
+    public function deleteTemplateDocument($id)
+    {
+        $document = new TemplateDocument();
+        $document = $document->find($id);
+        unlink(ROOTPATH . 'public/file/pdf/' . $document['pdf']);
+        $document = new TemplateDocument();
+        $document->where('id', $id)->delete();
+        return $this->getResponse('Berhasil menghapus dokumen');
     }
 }
